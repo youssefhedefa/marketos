@@ -21,18 +21,24 @@ class SplashView extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36.0, vertical: 90),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 38.0, vertical: 86),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Text(
+                const Text(
                   'Find Your Gadget',
                   textAlign: TextAlign.center,
                   style: AppFontStyleHelper.font62WhiteExtraBold,
                 ),
-                Spacer(),
+                const Spacer(),
+                CustomButton(
+                  onTap: () {},
+                  text: 'Get Started',
+                  textStyle: AppFontStyleHelper.font24PurpleRegular,
+                  color: Colors.white,
+                ),
               ],
             ),
           ),

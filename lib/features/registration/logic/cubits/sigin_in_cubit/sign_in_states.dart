@@ -9,5 +9,5 @@ class SignInSuccessState extends SignInStates{}
 class SignInErrorState extends SignInStates{
   final String error;
 
-  SignInErrorState(this.error);
+  SignInErrorState({required this.error});
 }

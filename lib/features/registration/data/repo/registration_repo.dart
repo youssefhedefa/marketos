@@ -16,7 +16,7 @@ class RegistrationRepo {
       var userCredential = await appFireBaseHelper.createUser(email: email, password: password);
       return right(userCredential);
     } on FirebaseAuthException catch (e) {
-      return left(e.message!);
+      return left(e.code.replaceAll('-', ' '));
     }
   }
 
@@ -28,7 +28,7 @@ class RegistrationRepo {
       var userCredential = await appFireBaseHelper.logIn(email: email, password: password);
       return right(userCredential);
     } on FirebaseAuthException catch (e) {
-      return left(e.message!);
+      return left(e.code.replaceAll('-', ' '));
     }
   }
 
@@ -37,7 +37,7 @@ class RegistrationRepo {
       appFireBaseHelper.addNewUser(userModel);
       return right(true);
     }on FirebaseAuthException catch (e) {
-      return left(e.message!);
+      return left(e.code.replaceAll('-', ' '));
     }
   }
 }

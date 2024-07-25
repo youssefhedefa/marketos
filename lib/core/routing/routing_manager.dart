@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
+import 'package:marketos/features/registration/logic/cubits/sigin_in_cubit/sign_in_cubit.dart';
 import 'package:marketos/features/registration/ui/forms/log_in_form.dart';
 import 'package:marketos/features/registration/ui/forms/sign_in_form.dart';
 import 'package:marketos/features/splash/ui/splash_view.dart';
@@ -9,7 +12,9 @@ class AppRoutingManager{
       case AppRoutingConstants.splash:
         return MaterialPageRoute(builder: (_) => const SplashView());
       case AppRoutingConstants.signIn:
-        return MaterialPageRoute(builder: (_) => const SignInForm());
+        return MaterialPageRoute(builder: (_) => BlocProvider.value(
+          value: getIt<SignInCubit>(),
+            child: const SignInForm(),),);
       case AppRoutingConstants.logIn:
         return MaterialPageRoute(builder: (_) => const LoginForm());
       default:

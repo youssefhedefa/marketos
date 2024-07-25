@@ -11,6 +11,7 @@ class SignInCubit extends Cubit<SignInStates>{
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
 
   signInStates({required String email, required String password}) async {

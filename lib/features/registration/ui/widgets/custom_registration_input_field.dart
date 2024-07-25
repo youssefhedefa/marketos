@@ -7,7 +7,7 @@ class CustomRegistrationInputField extends StatelessWidget {
       required this.title,
       required this.titleIcon,
       required this.isPassword,
-      required this.hint, this.onTap, required this.showPassword});
+      required this.hint, this.onTap, required this.showPassword, required this.controller, this.validator});
 
   final String title;
   final String hint;
@@ -15,6 +15,8 @@ class CustomRegistrationInputField extends StatelessWidget {
   final bool isPassword;
   final void Function()? onTap;
   final bool showPassword;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
 
 
   @override
@@ -38,6 +40,9 @@ class CustomRegistrationInputField extends StatelessWidget {
           ],
         ),
         TextFormField(
+          controller: controller,
+          validator: validator,
+          keyboardType: isPassword ? TextInputType.text : TextInputType.emailAddress,
           cursorColor: Colors.black,
           style: AppTextStyleHelper.font26BlackMedium,
           obscureText: showPassword,

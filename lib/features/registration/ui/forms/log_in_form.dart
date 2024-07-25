@@ -32,7 +32,8 @@ class _LoginFormState extends State<LoginForm> {
             style: AppTextStyleHelper.font26BlackBold,
           ),
           const SizedBox(height: 20,),
-          const CustomRegistrationInputField(
+          CustomRegistrationInputField(
+            controller: TextEditingController(),
             isPassword: false,
             showPassword: false,
             title: 'Email',
@@ -41,6 +42,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 20,),
           CustomRegistrationInputField(
+            controller: TextEditingController(),
             isPassword: true,
             showPassword: passwordVisible,
             title: 'Password',

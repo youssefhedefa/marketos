@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:marketos/core/components/custom_button.dart';
+import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
+import 'package:marketos/core/routing/routing_constants.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
@@ -30,14 +32,16 @@ class SplashView extends StatelessWidget {
                 const Text(
                   'Find Your Gadget',
                   textAlign: TextAlign.center,
-                  style: AppFontStyleHelper.font62WhiteExtraBold,
+                  style: AppTextStyleHelper.font62WhiteExtraBold,
                 ),
                 const Spacer(),
                 CustomButton(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRoutingConstants.signIn);
+                  },
                   text: 'Get Started',
-                  textStyle: AppFontStyleHelper.font24PurpleRegular,
-                  color: Colors.white,
+                  textStyle: AppTextStyleHelper.font28PurpleBold,
+                  color: AppColorHelper.whiteColor,
                 ),
               ],
             ),

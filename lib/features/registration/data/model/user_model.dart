@@ -10,7 +10,7 @@ class UserModel{
 
   UserModel( {required this.id, required this.email, required this.name, required this.password,required this.imageUrl,required this.cart,required this.favourites, required this.address});
 
-  factory UserModel.fromJson(Map<String, dynamic> json){
+  factory UserModel.fromMap(Map<String, dynamic> json){
     return UserModel(
       id: json['id'],
       email: json['email'],
@@ -24,7 +24,7 @@ class UserModel{
     );
   }
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toMap(){
     return {
       'id': id,
       'email': email,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
-import 'package:marketos/features/registration/ui/sign_in_form.dart';
+import 'package:marketos/features/registration/ui/forms/log_in_form.dart';
+import 'package:marketos/features/registration/ui/forms/sign_in_form.dart';
 import 'package:marketos/features/splash/ui/splash_view.dart';
 class AppRoutingManager{
   Route onGenerateRoute(RouteSettings settings){
@@ -9,6 +10,8 @@ class AppRoutingManager{
         return MaterialPageRoute(builder: (_) => const SplashView());
       case AppRoutingConstants.signIn:
         return MaterialPageRoute(builder: (_) => const SignInForm());
+      case AppRoutingConstants.logIn:
+        return MaterialPageRoute(builder: (_) => const LoginForm());
       default:
         return MaterialPageRoute(builder: (_) => const Scaffold());
     }

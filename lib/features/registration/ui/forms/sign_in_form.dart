@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:marketos/core/components/custom_button.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
+import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/features/registration/ui/registration_view.dart';
 import 'package:marketos/features/registration/ui/widgets/custom_registration_input_field.dart';
 import 'package:marketos/features/registration/ui/widgets/custom_registration_text.dart';
@@ -22,7 +23,7 @@ class _SignInFormState extends State<SignInForm> {
   @override
   Widget build(BuildContext context) {
     return RegistrationView(
-        title: 'Welcome to Marketos',
+        title: 'Welcome to \nMarketos',
         registrationForm: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
@@ -76,7 +77,9 @@ class _SignInFormState extends State<SignInForm> {
             const SizedBox(height: 20,),
             CustomRegistrationText(
               text: 'Already have an account? Sign in',
-              onTap: (){},
+              onTap: (){
+                Navigator.pushNamed(context, AppRoutingConstants.logIn);
+              },
             ),
           ],
         ),

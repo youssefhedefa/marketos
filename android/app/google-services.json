@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "454318568826",
+    "project_id": "marketoz",
+    "storage_bucket": "marketoz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454318568826:android:45f9d0b781aedafbc892c3",
+        "android_client_info": {
+          "package_name": "com.example.marketos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS9Meqf-9L1ag3mxRHuTTdrjyeAcDUKj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

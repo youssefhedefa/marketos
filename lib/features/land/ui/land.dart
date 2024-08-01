@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:marketos/core/components/custom_search_field.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
-import 'package:marketos/features/home/ui/widgets/custom_drawer.dart';
+import 'package:marketos/features/land/ui/widgets/custom_drawer.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class Land extends StatefulWidget {
+  const Land({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<Land> createState() => _LandState();
 }
 
-class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin {
+class _LandState extends State<Land> with SingleTickerProviderStateMixin {
 
   bool isDrawerOpen = false;
 

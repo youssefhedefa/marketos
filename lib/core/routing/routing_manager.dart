@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
-import 'package:marketos/features/home/ui/home_view.dart';
+import 'package:marketos/features/land/ui/land.dart';
 import 'package:marketos/features/registration/logic/cubits/log_in_cubit/log_in_cubit.dart';
 import 'package:marketos/features/registration/logic/cubits/sign_in_cubit/sign_in_cubit.dart';
 import 'package:marketos/features/registration/ui/forms/log_in_form.dart';
@@ -29,7 +29,7 @@ class AppRoutingManager {
           ),
         );
       case AppRoutingConstants.home:
-        return MaterialPageRoute(builder: (_) => const HomeView());
+        return MaterialPageRoute(builder: (_) => const Land());
       default:
         return MaterialPageRoute(builder: (_) => const Scaffold());
     }

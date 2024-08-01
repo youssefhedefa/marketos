@@ -1,14 +1,16 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:marketos/core/failure/failure.dart';
 import 'package:marketos/core/networking/firebase/firebase_helper.dart';
-import 'package:marketos/features/registration/data/model/user_model.dart';
+import 'package:marketos/features/registration/domain/repo/registration_repo.dart';
 
-class RegistrationRepo {
+class RegistrationRepoImple implements RegistrationRepo {
   final AppFireBaseHelper appFireBaseHelper;
 
-  RegistrationRepo({required this.appFireBaseHelper});
+  RegistrationRepoImple({required this.appFireBaseHelper});
 
-  Future<Either<String, UserCredential>> signIn({
+  @override
+  Future<Either<Failure, UserCredential>> signIn({
     required String email,
     required String password,
   }) async {
@@ -16,11 +18,12 @@ class RegistrationRepo {
       var userCredential = await appFireBaseHelper.createUser(email: email, password: password);
       return right(userCredential);
     } on FirebaseAuthException catch (e) {
-      return left(e.code.replaceAll('-', ' '));
+      return left(Failure(message: e.code));
     }
   }
 
-  Future<Either<String, UserCredential>> logIn({
+  @override
+  Future<Either<Failure, UserCredential>> logIn({
     required String email,
     required String password,
   }) async {
@@ -28,16 +31,8 @@ class RegistrationRepo {
       var userCredential = await appFireBaseHelper.logIn(email: email, password: password);
       return right(userCredential);
     } on FirebaseAuthException catch (e) {
-      return left(e.code.replaceAll('-', ' '));
+      return left(Failure(message: e.code));
     }
   }
 
-  Future<Either<String,bool>> addUser({required UserModel userModel}) async {
-    try{
-      appFireBaseHelper.addNewUser(userModel);
-      return right(true);
-    }on FirebaseAuthException catch (e) {
-      return left(e.code.replaceAll('-', ' '));
-    }
-  }
 }

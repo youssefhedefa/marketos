@@ -31,6 +31,13 @@ abstract class AppTextStyleHelper{
     fontFamily: 'Zain',
   );
 
+  static const TextStyle font22DarkGreyBold = TextStyle(
+    fontSize: 22,
+    fontWeight: AppFontWeightHelper.bold,
+    color: AppColorHelper.darkGreyColor,
+    fontFamily: 'Zain',
+  );
+
   static const TextStyle font26BlackBold = TextStyle(
     fontSize: 26,
     fontWeight: AppFontWeightHelper.bold,

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:marketos/core/components/custom_drawer_item.dart';
+import 'package:marketos/features/home/ui/widgets/custom_drawer_item.dart';
 import 'package:marketos/core/helpers/image_assets_helper.dart';
-
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -10,6 +9,8 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.transparent,
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -37,6 +38,14 @@ class CustomDrawer extends StatelessWidget {
             CustomDrawerItem(
               title: 'Settings',
               icon: Icons.settings_outlined,
+            ),
+            Spacer(),
+            CustomDrawerItem(
+              title: 'Sign Out',
+              icon: Icons.logout,
+            ),
+            SizedBox(
+              height: 60,
             ),
           ],
         ),

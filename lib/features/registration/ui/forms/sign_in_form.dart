@@ -128,12 +128,14 @@ class _SignInFormState extends State<SignInForm> {
               },
               listener: (BuildContext context, SignInStates state) {
                 if (state is SignInSuccessState) {
-                  Navigator.pushNamed(context, AppRoutingConstants.home);
+                  Navigator.pushNamedAndRemoveUntil(context, AppRoutingConstants.home, (route) => false);
                 }
                 if (state is SignInErrorState) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(state.error.message),
-                  ));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.error.message),
+                    ),
+                  );
                 }
               },
             ),

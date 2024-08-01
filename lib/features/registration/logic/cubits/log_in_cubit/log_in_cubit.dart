@@ -13,7 +13,6 @@ class LogInCubit extends Cubit<LogInStates>{
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-
   logInStates({required String email,required String password}) async {
     emit(LogInLoadingState());
     var result = await logInUseCase.call(email: email, password: password,);
@@ -24,6 +23,5 @@ class LogInCubit extends Cubit<LogInStates>{
         }
     );
   }
-
 
 }

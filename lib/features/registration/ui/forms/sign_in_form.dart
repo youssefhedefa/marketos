@@ -6,7 +6,6 @@ import 'package:marketos/core/components/custom_button.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
-import 'package:marketos/features/registration/data/model/user_model.dart';
 import 'package:marketos/features/registration/logic/cubits/sign_in_cubit/sign_in_cubit.dart';
 import 'package:marketos/features/registration/logic/cubits/sign_in_cubit/sign_in_states.dart';
 import 'package:marketos/features/registration/ui/registration_view.dart';
@@ -157,16 +156,9 @@ class _SignInFormState extends State<SignInForm> {
   signInAction() {
     if (context.read<SignInCubit>().formKey.currentState!.validate()) {
       context.read<SignInCubit>().signInStates(
-              userModel: UserModel(
-            email: context.read<SignInCubit>().emailController.text,
-            password: context.read<SignInCubit>().passwordController.text,
-            name: '',
-            address: '',
-            id: '',
-            imageUrl: '',
-            favourites: [],
-            cart: [],
-          ));
+        email: context.read<SignInCubit>().emailController.text,
+        password: context.read<SignInCubit>().passwordController.text,
+      );
     }
   }
 }

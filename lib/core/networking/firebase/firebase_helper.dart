@@ -27,7 +27,6 @@ class AppFireBaseHelper {
         id: auth.user!.uid,
         email: email,
         name: '',
-        password: password,
         imageUrl: AppConstance.baseImageUrl,
         cart: [],
         favourites: [],

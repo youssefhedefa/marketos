@@ -26,48 +26,35 @@ class CustomSearchField extends StatelessWidget {
             size: 30,
             color: Colors.black,
           ),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColorHelper.greyColor,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                24,
-              ),
-            ),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColorHelper.primaryColor,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                24,
-              ),
-            ),
-          ),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColorHelper.greyColor,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                24,
-              ),
-            ),
-          ),
-          disabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColorHelper.greyColor,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                24,
-              ),
-            ),
-          ),
+          border: borderDesign(),
+          focusedBorder: borderDesign(isFocused: true),
+          enabledBorder: borderDesign(),
+          disabledBorder: borderDesign(),
         ),
       ),
     );
   }
+
+  InputBorder borderDesign({bool isFocused = false}){
+    return isFocused ? const OutlineInputBorder(
+      borderSide: BorderSide(
+        color: AppColorHelper.primaryColor,
+      ),
+      borderRadius: BorderRadius.all(
+        Radius.circular(
+          24,
+        ),
+      ),
+    ) : const OutlineInputBorder(
+      borderSide: BorderSide(
+        color: AppColorHelper.greyColor,
+      ),
+      borderRadius: BorderRadius.all(
+        Radius.circular(
+          24,
+        ),
+      ),
+    );
+  }
+
 }

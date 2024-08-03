@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marketos/core/components/custom_search_field.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/features/land/ui/widgets/custom_drawer.dart';
@@ -52,7 +53,7 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
         children: [
           const CustomDrawer(),
           Transform.translate(
-            offset: Offset(scaleAnimation.value * 260, 0),
+            offset: Offset(scaleAnimation.value * 260.w, 0),
             child: Align(
               alignment: Alignment.centerRight,
               child: Container(
@@ -77,8 +78,8 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                   padding: const EdgeInsets.all(24.0),
                   child: Column(
                     children: [
-                      const SizedBox(
-                        height: 70,
+                      SizedBox(
+                        height: isDrawerOpen? 20.h : 70.h,
                       ),
                       Row(
                         children: [
@@ -98,6 +99,7 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                             },
                             icon:  Icon(
                                isDrawerOpen ? Icons.close :Icons.menu,
+                              size: 34.r,
                             ),
                           ),
                           const Expanded(child: CustomSearchField()),

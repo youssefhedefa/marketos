@@ -51,7 +51,7 @@ class CustomRegistrationInputField extends StatelessWidget {
             suffixIcon: isPassword
                 ? GestureDetector(
                     onTap: onTap,
-                    child: const Text(
+                    child: Text(
                       'show',
                       style: AppTextStyleHelper.font22PurpleBold,
                     ),

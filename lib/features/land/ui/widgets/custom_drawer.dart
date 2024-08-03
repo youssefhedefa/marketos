@@ -24,6 +24,10 @@ class CustomDrawer extends StatelessWidget {
               height: 140,
             ),
             CustomDrawerItem(
+              title: 'Shop',
+              icon: FontAwesomeIcons.shop,
+            ),
+            CustomDrawerItem(
               title: 'Profile',
               icon: FontAwesomeIcons.user,
             ),

@@ -29,7 +29,7 @@ class SplashView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                const Text(
+                Text(
                   'Find Your Gadget',
                   textAlign: TextAlign.center,
                   style: AppTextStyleHelper.font62WhiteExtraBold,

@@ -34,7 +34,7 @@ class _LoginFormState extends State<LoginForm> {
             const SizedBox(
               height: 16,
             ),
-            const Text(
+            Text(
               'Log In',
               style: AppTextStyleHelper.font26BlackBold,
             ),

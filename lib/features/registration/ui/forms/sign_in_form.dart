@@ -36,7 +36,7 @@ class _SignInFormState extends State<SignInForm> {
             const SizedBox(
               height: 16,
             ),
-            const Text(
+            Text(
               'Sign In',
               style: AppTextStyleHelper.font26BlackBold,
             ),

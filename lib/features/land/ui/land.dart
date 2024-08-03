@@ -66,7 +66,7 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                   heightWhenDrawerOpened: MediaQuery.sizeOf(context).height * 0.7,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColorHelper.darkWhiteColor,
                   borderRadius: isDrawerOpen ?  const BorderRadius.only(
                     topLeft: Radius.circular(40),
                     bottomLeft: Radius.circular(40),

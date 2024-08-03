@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:marketos/features/home/ui/widgets/custom_category_item.dart';
+import 'package:marketos/features/home/ui/widgets/categories/custom_category_item.dart';
 
 class CustomCategoriesList extends StatefulWidget {
   const CustomCategoriesList({super.key});

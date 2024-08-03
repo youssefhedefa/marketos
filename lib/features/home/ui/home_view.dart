@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
-import 'package:marketos/features/home/ui/widgets/custom_categories_list.dart';
-
+import 'package:marketos/features/home/ui/widgets/categories/custom_categories_list.dart';
+import 'package:marketos/features/home/ui/widgets/products/custom_products_list.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key, required this.isDrawerOpen});
@@ -14,11 +15,17 @@ class HomeView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-            'Order Online\ncollect in store',
-          style: isDrawerOpen ? AppTextStyleHelper.font36BlackBold : AppTextStyleHelper.font46BlackBold,
+          'Order Online\ncollect in store',
+          style: isDrawerOpen
+              ? AppTextStyleHelper.font36BlackBold
+              : AppTextStyleHelper.font46BlackBold,
         ),
         const SizedBox(height: 20),
         const CustomCategoriesList(),
+        const SizedBox(height: 20),
+        CustomProductsList(
+          isDrawerOpen: isDrawerOpen,
+        ),
       ],
     );
   }

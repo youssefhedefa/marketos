@@ -18,6 +18,10 @@ class CustomSearchField extends StatelessWidget {
         onChanged: onChanged,
         controller: controller,
         decoration: InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 16,
+          ),
           hintText: 'Search',
           hintStyle: AppTextStyleHelper.font22DarkGreyBold,
           enabled: enabled ?? false,

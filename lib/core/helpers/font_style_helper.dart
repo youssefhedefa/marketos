@@ -38,9 +38,29 @@ abstract class AppTextStyleHelper{
     color: AppColorHelper.darkGreyColor,
     fontFamily: 'Zain',
   );
+  static TextStyle font26DarkGreyBold = TextStyle(
+    fontSize: 26.sp,
+    fontWeight: AppFontWeightHelper.bold,
+    color: AppColorHelper.darkGreyColor,
+    fontFamily: 'Zain',
+  );
 
   static TextStyle font26BlackBold = TextStyle(
     fontSize: 26.sp,
+    fontWeight: AppFontWeightHelper.bold,
+    color: Colors.black,
+    fontFamily: 'Zain',
+  );
+
+  static TextStyle font46BlackBold = TextStyle(
+    fontSize: 46.sp,
+    fontWeight: AppFontWeightHelper.bold,
+    color: Colors.black,
+    fontFamily: 'Zain',
+  );
+
+  static TextStyle font36BlackBold = TextStyle(
+    fontSize: 36.sp,
     fontWeight: AppFontWeightHelper.bold,
     color: Colors.black,
     fontFamily: 'Zain',

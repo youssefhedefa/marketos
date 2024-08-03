@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marketos/core/components/custom_search_field.dart';
 import 'package:marketos/core/components/functions/calculate_hight.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
+import 'package:marketos/features/home/ui/home_view.dart';
 import 'package:marketos/features/land/ui/widgets/custom_drawer.dart';
 
 class Land extends StatefulWidget {
@@ -82,6 +83,7 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
                         height: calculateHeight(
@@ -113,6 +115,16 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                           ),
                           const Expanded(child: CustomSearchField()),
                         ],
+                      ),
+                      SizedBox(
+                        height: calculateHeight(
+                          isDrawerOpened : isDrawerOpen,
+                          heightWhenDrawerClosed: 24.h,
+                          heightWhenDrawerOpened: 20.h,
+                        ),
+                      ),
+                      HomeView(
+                        isDrawerOpen: isDrawerOpen,
                       ),
                     ],
                   ),

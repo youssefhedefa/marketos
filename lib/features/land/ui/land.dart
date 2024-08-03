@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marketos/core/components/custom_search_field.dart';
+import 'package:marketos/core/components/functions/calculate_hight.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/features/land/ui/widgets/custom_drawer.dart';
 
@@ -58,7 +59,11 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
               alignment: Alignment.centerRight,
               child: Container(
                 width: MediaQuery.sizeOf(context).width,
-                height: isDrawerOpen ? MediaQuery.sizeOf(context).height * 0.7 : MediaQuery.sizeOf(context).height,
+                height: calculateHeight(
+                  isDrawerOpened : isDrawerOpen,
+                  heightWhenDrawerClosed: MediaQuery.sizeOf(context).height,
+                  heightWhenDrawerOpened: MediaQuery.sizeOf(context).height * 0.7,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: isDrawerOpen ?  const BorderRadius.only(
@@ -79,7 +84,11 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: isDrawerOpen? 20.h : 70.h,
+                        height: calculateHeight(
+                          isDrawerOpened : isDrawerOpen,
+                          heightWhenDrawerClosed: 70.h,
+                          heightWhenDrawerOpened: 20.h,
+                        ),
                       ),
                       Row(
                         children: [

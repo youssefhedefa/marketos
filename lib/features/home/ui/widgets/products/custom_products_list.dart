@@ -6,22 +6,37 @@ import 'package:marketos/features/home/logic/cubits/get_products_by_category/get
 import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_states.dart';
 import 'package:marketos/features/home/ui/widgets/products/custom_product_item.dart';
 
-class CustomProductsList extends StatelessWidget {
+class CustomProductsList extends StatefulWidget {
   const CustomProductsList({super.key, required this.isDrawerOpen});
 
   final bool isDrawerOpen;
 
   @override
+  State<CustomProductsList> createState() => _CustomProductsListState();
+}
+
+class _CustomProductsListState extends State<CustomProductsList> {
+  @override
+  void initState() {
+    context.read<GetProductByCategoryCubit>().getProductByCategory('beauty');
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GetProductByCategoryCubit,GetProductsByCategoryState>(
-      builder: (context,state) {
+    return BlocBuilder<GetProductByCategoryCubit, GetProductsByCategoryState>(
+      builder: (context, state) {
         if (state is GetProductsByCategorySuccessState) {
           return SizedBox(
-            height: calculateHeight(isDrawerOpened: isDrawerOpen, heightWhenDrawerOpened: 260.h, heightWhenDrawerClosed: 360.h),
+            height: calculateHeight(
+              isDrawerOpened: widget.isDrawerOpen,
+              heightWhenDrawerOpened: 230.h,
+              heightWhenDrawerClosed: 360.h,
+            ),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => ProductItem(
-                isDrawerOpen: isDrawerOpen,
+                isDrawerOpen: widget.isDrawerOpen,
                 productImage: state.products[index].image,
                 productName: state.products[index].name,
                 productPrice: state.products[index].productPrice,
@@ -32,17 +47,21 @@ class CustomProductsList extends StatelessWidget {
               itemCount: state.products.length,
             ),
           );
-        }
-        else if (state is GetProductsByCategoryErrorState) {
+        } else if (state is GetProductsByCategoryErrorState) {
           return Center(
             child: Text(state.message),
           );
         }
-        return const Center(
-          child: CircularProgressIndicator(),
+        return SizedBox(
+          height: calculateHeight(
+              isDrawerOpened: widget.isDrawerOpen,
+              heightWhenDrawerOpened: 260.h,
+              heightWhenDrawerClosed: 360.h),
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
         );
-      }
+      },
     );
   }
 }
-

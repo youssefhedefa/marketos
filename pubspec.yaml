@@ -28,6 +28,7 @@ dependencies:
   dio: any
   retrofit: any
   pretty_dio_logger: any
+  cached_network_image: ^3.3.1
 
 
 

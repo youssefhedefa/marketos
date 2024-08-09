@@ -135,7 +135,7 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                             value: getIt<GetCategoriesCubit>(),
                           ),
                           BlocProvider.value(
-                            value: getIt<GetProductByCategoryCubit>()..getProductByCategory('beauty'),
+                            value: getIt<GetProductByCategoryCubit>(),
                           ),
                         ],
                         child: HomeView(

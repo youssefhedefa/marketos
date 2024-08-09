@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
 import 'package:marketos/features/home/ui/widgets/categories/custom_categories_list.dart';
 import 'package:marketos/features/home/ui/widgets/products/custom_products_list.dart';

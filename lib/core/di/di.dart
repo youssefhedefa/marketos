@@ -9,6 +9,9 @@ import 'package:marketos/features/registration/logic/cubits/sign_in_cubit/sign_i
 final getIt = GetIt.instance;
 
 void setupDependencyInjection() {
+
+  
+
   getIt.registerLazySingleton<AppFireBaseHelper>(() => AppFireBaseHelper());
   getIt.registerLazySingleton<RegistrationRepoImple>(() => RegistrationRepoImple(appFireBaseHelper: getIt<AppFireBaseHelper>()));
 

@@ -10,7 +10,7 @@ import 'package:marketos/features/registration/ui/forms/sign_in_form.dart';
 import 'package:marketos/features/splash/ui/splash_view.dart';
 
 class AppRoutingManager {
-  Route onGenerateRoute(RouteSettings settings) {
+  Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutingConstants.splash:
         return MaterialPageRoute(builder: (_) => const SplashView());
@@ -31,7 +31,7 @@ class AppRoutingManager {
       case AppRoutingConstants.home:
         return MaterialPageRoute(builder: (_) => const Land());
       default:
-        return MaterialPageRoute(builder: (_) => const Scaffold());
+        return null;
     }
   }
 }

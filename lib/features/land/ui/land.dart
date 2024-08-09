@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marketos/core/components/custom_search_field.dart';
 import 'package:marketos/core/components/functions/calculate_height.dart';
+import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
+import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categories_cubit.dart';
 import 'package:marketos/features/home/ui/home_view.dart';
 import 'package:marketos/features/land/ui/widgets/custom_drawer.dart';
 
@@ -123,8 +126,11 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                           heightWhenDrawerOpened: 20.h,
                         ),
                       ),
-                      HomeView(
-                        isDrawerOpen: isDrawerOpen,
+                      BlocProvider.value(
+                        value: getIt<GetCategoriesCubit>(),
+                        child: HomeView(
+                          isDrawerOpen: isDrawerOpen,
+                        ),
                       ),
                     ],
                   ),

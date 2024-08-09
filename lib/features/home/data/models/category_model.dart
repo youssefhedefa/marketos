@@ -1,13 +1,21 @@
-class CategoryModel {
-  final String name;
-  final String ref;
+import 'package:marketos/features/home/domain/entities/category_entity.dart';
 
-  CategoryModel({required this.name, required this.ref});
+class CategoryModel extends CategoryEntity {
+  final String name;
+  final String slug;
+
+  CategoryModel({
+    required this.name,
+    required this.slug,
+  }) : super(
+          category: name,
+          ref: slug,
+        );
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
       name: json['name'],
-      ref: json['slug'],
+      slug: json['slug'],
     );
   }
 }

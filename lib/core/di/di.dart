@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:marketos/core/networking/api/dio_factory.dart';
 import 'package:marketos/core/networking/firebase/firebase_helper.dart';
+import 'package:marketos/features/home/data/apis/home_api_service.dart';
 import 'package:marketos/features/registration/data/repo_imple/registration_repo_imple.dart';
 import 'package:marketos/features/registration/domain/use_cases/log_in_use_case.dart';
 import 'package:marketos/features/registration/domain/use_cases/sign_in_use_case.dart';
@@ -8,9 +11,9 @@ import 'package:marketos/features/registration/logic/cubits/sign_in_cubit/sign_i
 
 final getIt = GetIt.instance;
 
-void setupDependencyInjection() {
+void setupDependencyInjection() async {
 
-  
+  Dio dio = await DioFactory.getDio();
 
   getIt.registerLazySingleton<AppFireBaseHelper>(() => AppFireBaseHelper());
   getIt.registerLazySingleton<RegistrationRepoImple>(() => RegistrationRepoImple(appFireBaseHelper: getIt<AppFireBaseHelper>()));
@@ -21,5 +24,7 @@ void setupDependencyInjection() {
 
   getIt.registerLazySingleton<SignInCubit>(() => SignInCubit(signInUseCase: getIt<SignInUseCase>()));
   getIt.registerLazySingleton<LogInCubit>(() => LogInCubit(logInUseCase: getIt<LogInUseCase>()));
+
+  getIt.registerLazySingleton<HomeApiService>(() => HomeApiService(dio));
 
 }

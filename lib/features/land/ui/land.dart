@@ -6,6 +6,7 @@ import 'package:marketos/core/components/functions/calculate_height.dart';
 import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categories_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
 import 'package:marketos/features/home/ui/home_view.dart';
 import 'package:marketos/features/land/ui/widgets/custom_drawer.dart';
 
@@ -17,7 +18,6 @@ class Land extends StatefulWidget {
 }
 
 class _LandState extends State<Land> with SingleTickerProviderStateMixin {
-
   bool isDrawerOpen = false;
 
   late AnimationController animationController;
@@ -29,8 +29,8 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 250),
     )..addListener(() {
-      setState(() {});
-    });
+        setState(() {});
+      });
     scaleAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -64,16 +64,19 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
               child: Container(
                 width: MediaQuery.sizeOf(context).width,
                 height: calculateHeight(
-                  isDrawerOpened : isDrawerOpen,
+                  isDrawerOpened: isDrawerOpen,
                   heightWhenDrawerClosed: MediaQuery.sizeOf(context).height,
-                  heightWhenDrawerOpened: MediaQuery.sizeOf(context).height * 0.7,
+                  heightWhenDrawerOpened:
+                      MediaQuery.sizeOf(context).height * 0.7,
                 ),
                 decoration: BoxDecoration(
                   color: AppColorHelper.darkWhiteColor,
-                  borderRadius: isDrawerOpen ?  const BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    bottomLeft: Radius.circular(40),
-                  ) : null,
+                  borderRadius: isDrawerOpen
+                      ? const BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          bottomLeft: Radius.circular(40),
+                        )
+                      : null,
                   boxShadow: const [
                     BoxShadow(
                       color: AppColorHelper.lightPrimaryColor,
@@ -90,7 +93,7 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                     children: [
                       SizedBox(
                         height: calculateHeight(
-                          isDrawerOpened : isDrawerOpen,
+                          isDrawerOpened: isDrawerOpen,
                           heightWhenDrawerClosed: 70.h,
                           heightWhenDrawerOpened: 20.h,
                         ),
@@ -99,7 +102,7 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                         children: [
                           IconButton(
                             onPressed: () {
-                              if(isDrawerOpen) {
+                              if (isDrawerOpen) {
                                 animationController.reverse();
                                 setState(() {
                                   isDrawerOpen = !isDrawerOpen;
@@ -111,8 +114,8 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                                 });
                               }
                             },
-                            icon:  Icon(
-                               isDrawerOpen ? Icons.close :Icons.menu,
+                            icon: Icon(
+                              isDrawerOpen ? Icons.close : Icons.menu,
                               size: 34.r,
                             ),
                           ),
@@ -121,13 +124,20 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                       ),
                       SizedBox(
                         height: calculateHeight(
-                          isDrawerOpened : isDrawerOpen,
+                          isDrawerOpened: isDrawerOpen,
                           heightWhenDrawerClosed: 24.h,
                           heightWhenDrawerOpened: 20.h,
                         ),
                       ),
-                      BlocProvider.value(
-                        value: getIt<GetCategoriesCubit>(),
+                      MultiBlocProvider(
+                        providers: [
+                          BlocProvider.value(
+                            value: getIt<GetCategoriesCubit>(),
+                          ),
+                          BlocProvider.value(
+                            value: getIt<GetProductByCategoryCubit>()..getProductByCategory('beauty'),
+                          ),
+                        ],
                         child: HomeView(
                           isDrawerOpen: isDrawerOpen,
                         ),

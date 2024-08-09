@@ -1,20 +1,19 @@
 import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
 
 class ProductModel {
+  final List<ProductData> products;
 
-  final List<ProductData>? products;
-
-  ProductModel({
-      required this.products
-  }) ;
+  ProductModel({required this.products});
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      products: json['products'],
+      products: json["products"] == null
+          ? []
+          : List<ProductData>.from(
+              json["products"]!.map((x) => ProductData.fromJson(x))),
     );
   }
 }
-
 
 class ProductData extends HomeProductEntity {
   final int id;
@@ -25,12 +24,20 @@ class ProductData extends HomeProductEntity {
   final String thumbnail;
   final String category;
 
-  ProductData({required this.id, required this.title, required this.description, required this.price, required this.images, required this.thumbnail, required this.category}) : super(
-  productID: id,
-  name: title,
-  productPrice: price,
-  image: thumbnail,
-  );
+  ProductData(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.price,
+      required this.images,
+      required this.thumbnail,
+      required this.category})
+      : super(
+          productID: id,
+          name: title,
+          productPrice: price,
+          image: thumbnail,
+        );
 
   factory ProductData.fromJson(Map<String, dynamic> json) {
     return ProductData(
@@ -43,6 +50,4 @@ class ProductData extends HomeProductEntity {
       category: json['category'],
     );
   }
-
-
 }

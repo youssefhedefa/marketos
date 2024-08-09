@@ -12,6 +12,6 @@ abstract class HomeRepo{
 
 
   Future<Either<Failure,List<CategoryEntity>>> getHomeCategories();
-  Future<Either<Failure,List<HomeProductEntity>>> getProductsByCategory();
+  Future<Either<Failure,List<HomeProductEntity>>> getProductsByCategory({required String category});
 
 }

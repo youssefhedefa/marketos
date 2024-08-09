@@ -6,6 +6,7 @@ import 'package:marketos/features/home/domain/entities/home_product_entity.dart'
 import 'package:marketos/features/home/domain/repos/home_repo.dart';
 
 class HomeRepoImple implements HomeRepo {
+  @override
   final HomeApiService homeApiService;
 
   HomeRepoImple({required this.homeApiService});
@@ -21,8 +22,12 @@ class HomeRepoImple implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<HomeProductEntity>>> getProductsByCategory() {
-    // TODO: implement getProductsByCategory
-    throw UnimplementedError();
+  Future<Either<Failure, List<HomeProductEntity>>> getProductsByCategory({required String category}) async {
+    try {
+      var products = await homeApiService.getProductsByCategory(category: category);
+      return Right(products.products);
+    } catch (error) {
+      return Left(Failure(message: error.toString()));
+    }
   }
 }

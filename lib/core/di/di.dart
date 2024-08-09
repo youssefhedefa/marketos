@@ -5,7 +5,9 @@ import 'package:marketos/core/networking/firebase/firebase_helper.dart';
 import 'package:marketos/features/home/data/apis/home_api_service.dart';
 import 'package:marketos/features/home/data/repos_imple/home_repo_imple.dart';
 import 'package:marketos/features/home/domain/repos/home_repo.dart';
+import 'package:marketos/features/home/domain/use_cases/get_products_by_category_use_case.dart';
 import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categories_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
 import 'package:marketos/features/registration/data/repo_imple/registration_repo_imple.dart';
 import 'package:marketos/features/registration/domain/use_cases/log_in_use_case.dart';
 import 'package:marketos/features/registration/domain/use_cases/sign_in_use_case.dart';
@@ -33,5 +35,7 @@ void setupDependencyInjection() async {
   //home
 
   getIt.registerLazySingleton<HomeRepo>(() => HomeRepoImple(homeApiService: getIt<HomeApiService>()));
+  getIt.registerLazySingleton<GetProductsByCategoryUseCase>(() => GetProductsByCategoryUseCase(homeRepo: getIt<HomeRepo>()));
   getIt.registerLazySingleton<GetCategoriesCubit>(() => GetCategoriesCubit(homeRepo: getIt<HomeRepo>()));
+  getIt.registerLazySingleton<GetProductByCategoryCubit>(() => GetProductByCategoryCubit(useCase: getIt<GetProductsByCategoryUseCase>()));
 }

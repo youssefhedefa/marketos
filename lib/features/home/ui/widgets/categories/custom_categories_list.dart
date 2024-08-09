@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categories_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categories_states.dart';
+import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
 import 'package:marketos/features/home/ui/widgets/categories/custom_category_item.dart';
 
 class CustomCategoriesList extends StatefulWidget {
@@ -35,6 +36,7 @@ class _CustomCategoriesListState extends State<CustomCategoriesList> {
                   onTap: (){
                     setState(() {
                       selectedIndex = index;
+                      context.read<GetProductByCategoryCubit>().getProductByCategory(state.categories[index].ref);
                     });
                   },
                   child: CustomCategoryItem(

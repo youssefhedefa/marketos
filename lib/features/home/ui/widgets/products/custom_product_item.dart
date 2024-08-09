@@ -5,9 +5,12 @@ import 'package:marketos/features/home/ui/widgets/products/product_details.dart'
 
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({super.key,required this.isDrawerOpen});
+  const ProductItem({super.key,required this.isDrawerOpen, required this.productPrice, required this.productName, required this.productImage});
 
   final bool isDrawerOpen;
+  final num productPrice;
+  final String productName;
+  final String productImage;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +32,15 @@ class ProductItem extends StatelessWidget {
               ),
               child: ProductDetails(
                 isDrawerOpen: isDrawerOpen,
+                productPrice: productPrice,
+                productName: productName,
               ),
             ),
             Positioned(
               bottom: isDrawerOpen ? 110.h : 120.h,
               child: ProductImage(
                 isDrawerOpen : isDrawerOpen,
+                productImage: productImage,
               ),
             ),
           ],

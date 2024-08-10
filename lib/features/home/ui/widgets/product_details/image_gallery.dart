@@ -19,7 +19,6 @@ class _ImagesGalleryState extends State<ImagesGallery> {
   @override
   void initState() {
     mainImage = widget.mainImage;
-    //changeMainImage(widget.mainImage);
     super.initState();
   }
 
@@ -42,7 +41,7 @@ class _ImagesGalleryState extends State<ImagesGallery> {
             height: 16,
           ),
           OtherProductImages(
-            images: [widget.mainImage,...widget.otherImages],
+            images: widget.otherImages,
             changeMainImage: changeMainImage,
           ),
         ],

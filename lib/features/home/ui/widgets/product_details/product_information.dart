@@ -5,7 +5,12 @@ import 'package:marketos/core/helpers/font_style_helper.dart';
 
 
 class ProductInformation extends StatelessWidget {
-  const ProductInformation({super.key});
+  const ProductInformation({super.key, required this.id, required this.name, required this.description, required this.price});
+
+  final int id;
+  final String name;
+  final String description;
+  final num price;
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +29,12 @@ class ProductInformation extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Product Name',
+                name,
                 style: AppTextStyleHelper.font36BlackBold,
               ),
               const SizedBox(height: 20),
               Text(
-                'Product Description Product Description Product Description Product Description',
+                description,
                 style: AppTextStyleHelper.font22DarkGreyBold,
               ),
               const SizedBox(height: 20),
@@ -42,7 +47,7 @@ class ProductInformation extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    '\$100',
+                    '\$$price',
                     style: AppTextStyleHelper.font26PurpleBold,
                   ),
                 ],

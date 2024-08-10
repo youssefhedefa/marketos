@@ -5,6 +5,7 @@ class HomeProductEntity{
   final String image;
   final List<String> otherImages;
   final String productCategory;
+  final String productDescription;
 
   HomeProductEntity({
     required this.productID,
@@ -13,5 +14,6 @@ class HomeProductEntity{
     required this.image,
     required this.productCategory,
     required this.otherImages,
+    required this.productDescription,
   });
 }

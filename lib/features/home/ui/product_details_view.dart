@@ -32,7 +32,12 @@ class ProductDetailsView extends StatelessWidget {
             mainImage: product.image,
             otherImages: product.otherImages,
           ),
-          const ProductInformation(),
+          ProductInformation(
+            id: product.productID,
+            name: product.name,
+            description: product.productDescription,
+            price: product.productPrice,
+          ),
         ],
       ),
     );

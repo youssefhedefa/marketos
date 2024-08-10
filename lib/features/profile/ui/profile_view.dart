@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:marketos/features/profile/ui/widgets/profile_card.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+  const ProfileView({super.key, required this.isDrawerOpened});
+
+  final bool isDrawerOpened;
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        ProfileCard(),
+        ProfileCard(
+          isDrawerOpened: isDrawerOpened,
+        ),
       ],
     );
   }

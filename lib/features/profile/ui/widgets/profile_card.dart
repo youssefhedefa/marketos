@@ -4,17 +4,19 @@ import 'package:marketos/core/helpers/font_style_helper.dart';
 
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({super.key});
+  const ProfileCard({super.key, required this.isDrawerOpened});
+
+  final bool isDrawerOpened;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 250.h,
+      height: isDrawerOpened ? 200.h : 250.h,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           Container(
-            height: 210.h,
+            height: isDrawerOpened ? 170.h :  210.h,
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -23,7 +25,7 @@ class ProfileCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(height: 46.h),
+                SizedBox(height: isDrawerOpened ? 10.h :  46.h),
                 Text(
                   'John Doe',
                   style: AppTextStyleHelper.font32BlackBold,
@@ -42,7 +44,7 @@ class ProfileCard extends StatelessWidget {
           Positioned(
             top: 0,
             child: CircleAvatar(
-              radius: 56.r,
+              radius: isDrawerOpened ? 20.r :  56.r,
               backgroundColor: Colors.white,
               child:
               Image.network('https://avatar.iran.liara.run/public/25'),

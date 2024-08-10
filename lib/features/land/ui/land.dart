@@ -78,7 +78,9 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
           isDrawerOpen: isDrawerOpen,
         ),
       ),
-      const ProfileView(),
+      ProfileView(
+        isDrawerOpened: isDrawerOpen,
+      ),
       const Scaffold(),
       const Scaffold(),
       const Scaffold(),

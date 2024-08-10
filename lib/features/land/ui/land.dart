@@ -9,6 +9,7 @@ import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categ
 import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
 import 'package:marketos/features/home/ui/home_view.dart';
 import 'package:marketos/features/land/ui/widgets/custom_drawer.dart';
+import 'package:marketos/features/profile/ui/profile_view.dart';
 
 class Land extends StatefulWidget {
   const Land({super.key});
@@ -18,10 +19,22 @@ class Land extends StatefulWidget {
 }
 
 class _LandState extends State<Land> with SingleTickerProviderStateMixin {
+
   bool isDrawerOpen = false;
+  int currentViewIndex = 0;
 
   late AnimationController animationController;
   late Animation scaleAnimation;
+
+  late List<Widget> views;
+
+  void changeView(int index) {
+    setState(() {
+      currentViewIndex = index;
+      isDrawerOpen = false;
+      animationController.reverse();
+    });
+  }
 
   @override
   void initState() {
@@ -51,12 +64,33 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    views = [
+      MultiBlocProvider(
+        providers: [
+          BlocProvider.value(
+            value: getIt<GetCategoriesCubit>(),
+          ),
+          BlocProvider.value(
+            value: getIt<GetProductByCategoryCubit>(),
+          ),
+        ],
+        child: HomeView(
+          isDrawerOpen: isDrawerOpen,
+        ),
+      ),
+      const ProfileView(),
+      const Scaffold(),
+      const Scaffold(),
+      const Scaffold(),
+    ];
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBody: true,
       body: Stack(
         children: [
-          const CustomDrawer(),
+          CustomDrawer(
+            changeView: changeView,
+          ),
           Transform.translate(
             offset: Offset(scaleAnimation.value * 260.w, 0),
             child: Align(
@@ -129,19 +163,7 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                           heightWhenDrawerOpened: 20.h,
                         ),
                       ),
-                      MultiBlocProvider(
-                        providers: [
-                          BlocProvider.value(
-                            value: getIt<GetCategoriesCubit>(),
-                          ),
-                          BlocProvider.value(
-                            value: getIt<GetProductByCategoryCubit>(),
-                          ),
-                        ],
-                        child: HomeView(
-                          isDrawerOpen: isDrawerOpen,
-                        ),
-                      ),
+                      views[currentViewIndex],
                     ],
                   ),
                 ),

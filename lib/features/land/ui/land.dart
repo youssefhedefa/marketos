@@ -5,6 +5,7 @@ import 'package:marketos/core/components/custom_search_field.dart';
 import 'package:marketos/core/components/functions/calculate_height.dart';
 import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
+import 'package:marketos/core/helpers/font_style_helper.dart';
 import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categories_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
 import 'package:marketos/features/home/ui/home_view.dart';
@@ -19,7 +20,6 @@ class Land extends StatefulWidget {
 }
 
 class _LandState extends State<Land> with SingleTickerProviderStateMixin {
-
   bool isDrawerOpen = false;
   int currentViewIndex = 0;
 
@@ -153,7 +153,17 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                               size: 34.r,
                             ),
                           ),
-                          const Expanded(child: CustomSearchField()),
+                          currentViewIndex == 1
+                              ? Padding(
+                                  padding: const EdgeInsets.only(left: 24.0),
+                                  child: Text(
+                                    'My Profile',
+                                    style: AppTextStyleHelper.font32BlackBold,
+                                  ),
+                                )
+                              : const Expanded(
+                                  child: CustomSearchField(),
+                                ),
                         ],
                       ),
                       SizedBox(

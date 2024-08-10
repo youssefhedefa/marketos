@@ -11,6 +11,7 @@ import 'package:marketos/features/home/logic/cubits/get_products_by_category/get
 import 'package:marketos/features/home/ui/home_view.dart';
 import 'package:marketos/features/land/ui/widgets/custom_drawer.dart';
 import 'package:marketos/features/profile/logic/cubits/change_name_cubit/change_name_cubit.dart';
+import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_profile_cubit.dart';
 import 'package:marketos/features/profile/ui/profile_view.dart';
 
 class Land extends StatefulWidget {
@@ -81,8 +82,11 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
       ),
       MultiBlocProvider(
         providers: [
-          BlocProvider.value(
-            value: getIt<ChangeNameCubit>(),
+          BlocProvider(
+              create: (context) => getIt<GetProfileCubit>()..getProfile(),
+          ),
+          BlocProvider(
+            create: (context)=> getIt<ChangeNameCubit>(),
           ),
         ],
         child: ProfileView(

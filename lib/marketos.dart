@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/core/routing/routing_manager.dart';
 
@@ -18,11 +19,11 @@ class Marketos extends StatelessWidget {
         title: 'Marketos',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColorHelper.primaryColor),
           useMaterial3: true,
         ),
         onGenerateRoute: appRoutingManager.onGenerateRoute,
-        initialRoute: AppRoutingConstants.splash,
+        initialRoute: AppRoutingConstants.land,
         // home:const Land(),
         // home:const ProductDetailsView(),
       ),

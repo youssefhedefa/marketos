@@ -3,8 +3,8 @@ class UserModel{
   final String email;
   final String name;
   final String imageUrl;
-  final List<String> cart;
-  final List<String> favourites;
+  final List<dynamic> cart;
+  final List<dynamic> favourites;
   final dynamic address;
 
   UserModel( {required this.id, required this.email, required this.name, required this.imageUrl,required this.cart,required this.favourites, required this.address});

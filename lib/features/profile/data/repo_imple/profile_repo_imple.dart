@@ -9,6 +9,8 @@ class ProfileRepoImple extends ProfileRepo {
 
   ProfileRepoImple({required this.appFireBaseHelper});
 
+
+
   @override
   Future<Either<Failure, UserModel>> changeAddress({required String address}) {
     // TODO: implement changeAddress
@@ -25,6 +27,18 @@ class ProfileRepoImple extends ProfileRepo {
   Future<Either<Failure, dynamic>> changeName({required String name}) async {
     try{
       var result = await appFireBaseHelper.changeUserName(userId: appFireBaseHelper.firebaseAuth.currentUser!.uid, name: name);
+      return Right(result);
+    }
+    catch(e){
+      print(e.toString());
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel?>> getProfile() async {
+    try{
+      var result = await appFireBaseHelper.getUser(appFireBaseHelper.firebaseAuth.currentUser!.uid);
       return Right(result);
     }
     catch(e){

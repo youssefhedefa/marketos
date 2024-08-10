@@ -3,10 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
+import 'package:marketos/features/home/data/models/view_all_model.dart';
 import 'package:marketos/features/home/ui/widgets/products/custom_product_item.dart';
 
 class ViewAllView extends StatelessWidget {
-  const ViewAllView({super.key});
+  const ViewAllView({super.key,required this.viewAllModel,});
+
+  final ViewAllModel viewAllModel;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class ViewAllView extends StatelessWidget {
       backgroundColor: AppColorHelper.darkWhiteColor,
       appBar: AppBar(
         title: Text(
-            'Category Name',
+            viewAllModel.categoryName,
           style: AppTextStyleHelper.font36BlackBold,
         ),
         backgroundColor: AppColorHelper.darkWhiteColor,
@@ -29,7 +32,7 @@ class ViewAllView extends StatelessWidget {
                 gridDelegate:
                     const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
-                itemCount: 10,
+                itemCount: viewAllModel.products.length,
                 mainAxisSpacing: 16.h,
                 crossAxisSpacing: 40.w,
                 itemBuilder: (BuildContext context, int index) {
@@ -38,24 +41,24 @@ class ViewAllView extends StatelessWidget {
                       padding: EdgeInsets.only(top: 90.0.h),
                       child: GestureDetector(
                         onTap: () {},
-                        child: const ProductItem(
+                        child: ProductItem(
                           isDrawerOpen: false,
-                          productName: 'Product Name',
-                          productPrice: 20,
+                          productName: viewAllModel.products[index].name,
+                          productPrice: viewAllModel.products[index].productPrice,
                           productImage:
-                              'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
+                          viewAllModel.products[index].image,
                         ),
                       ),
                     );
                   }
                   return GestureDetector(
                     onTap: () {},
-                    child: const ProductItem(
+                    child: ProductItem(
                       isDrawerOpen: false,
-                      productName: 'Product Name',
-                      productPrice: 20,
+                      productName: viewAllModel.products[index].name,
+                      productPrice: viewAllModel.products[index].productPrice,
                       productImage:
-                          'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
+                      viewAllModel.products[index].image,
                     ),
                   );
                 },

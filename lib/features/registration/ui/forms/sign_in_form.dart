@@ -127,7 +127,7 @@ class _SignInFormState extends State<SignInForm> {
               },
               listener: (BuildContext context, SignInStates state) {
                 if (state is SignInSuccessState) {
-                  Navigator.pushNamedAndRemoveUntil(context, AppRoutingConstants.home, (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(context, AppRoutingConstants.land, (route) => false);
                 }
                 if (state is SignInErrorState) {
                   ScaffoldMessenger.of(context).showSnackBar(

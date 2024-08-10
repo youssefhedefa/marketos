@@ -100,7 +100,7 @@ class _LoginFormState extends State<LoginForm> {
               },
               listener: (BuildContext context, LogInStates state) {
                 if (state is LogInSuccessState) {
-                  Navigator.pushNamedAndRemoveUntil(context, AppRoutingConstants.home, (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(context, AppRoutingConstants.land, (route) => false);
                 }
                 if (state is LogInErrorState) {
                   ScaffoldMessenger.of(context).showSnackBar(

@@ -10,7 +10,7 @@ class MainImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.sizeOf(context).height * 0.26,
+      height: MediaQuery.sizeOf(context).height * 0.235,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
       ),

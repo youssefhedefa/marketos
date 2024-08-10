@@ -8,24 +8,27 @@ class ImagesGallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        MainImage(
-          image: 'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        OtherProductImages(
-          images: [
-            'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
-            'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
-            'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
-            'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
-            'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
-          ],
-        ),
-      ],
+    return const Padding(
+      padding: EdgeInsets.all(18),
+      child: Column(
+        children: [
+          MainImage(
+            image: 'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          OtherProductImages(
+            images: [
+              'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
+              'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
+              'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
+              'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
+              'https://cdn.dummyjson.com/products/images/home-decoration/Decoration%20Swing/thumbnail.png',
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

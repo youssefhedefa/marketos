@@ -11,7 +11,7 @@ class OtherProductImages extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        height: ((MediaQuery.sizeOf(context).width - 100) / 4),
+        height: ((MediaQuery.sizeOf(context).width - 140) / 4),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ListView.separated(

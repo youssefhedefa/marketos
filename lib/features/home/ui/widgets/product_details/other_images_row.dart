@@ -3,9 +3,10 @@ import 'package:marketos/features/home/ui/widgets/product_details/other_image_it
 
 
 class OtherProductImages extends StatelessWidget {
-  const OtherProductImages({super.key, required this.images});
+  const OtherProductImages({super.key, required this.images, required this.changeMainImage});
 
   final List<String> images;
+  final Function changeMainImage;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +18,7 @@ class OtherProductImages extends StatelessWidget {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (_,index) =>  GestureDetector(
-              onTap: () {
-                // context.read<ProductCubit>().changeMainImageIndex(index : index);
-                // print('index: $index');
-              },
+              onTap: () => changeMainImage(images[index]),
               child: OtherImageItem(
                 imageUrl: images[index],
               ),

@@ -3,13 +3,15 @@ class HomeProductEntity{
   final String name;
   final num productPrice;
   final String image;
-  final String prodactCategory;
+  final List<String> otherImages;
+  final String productCategory;
 
   HomeProductEntity({
     required this.productID,
     required this.name,
     required this.productPrice,
     required this.image,
-    required this.prodactCategory,
+    required this.productCategory,
+    required this.otherImages,
   });
 }

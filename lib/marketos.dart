@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/core/routing/routing_manager.dart';
-import 'package:marketos/features/home/ui/product_details_view.dart';
 
 class Marketos extends StatelessWidget {
   const Marketos({super.key, required this.appRoutingManager});
@@ -21,10 +21,10 @@ class Marketos extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        // onGenerateRoute: appRoutingManager.onGenerateRoute,
-        // initialRoute: AppRoutingConstants.land,
+        onGenerateRoute: appRoutingManager.onGenerateRoute,
+        initialRoute: AppRoutingConstants.land,
         // home:const Land(),
-        home:const ProductDetailsView(),
+        // home:const ProductDetailsView(),
       ),
     );
   }

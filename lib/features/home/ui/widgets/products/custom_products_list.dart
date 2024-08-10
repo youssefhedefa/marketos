@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marketos/core/components/functions/calculate_height.dart';
+import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_states.dart';
 import 'package:marketos/features/home/ui/widgets/products/custom_product_item.dart';
@@ -35,11 +36,17 @@ class _CustomProductsListState extends State<CustomProductsList> {
             ),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => ProductItem(
-                isDrawerOpen: widget.isDrawerOpen,
-                productImage: state.products[index].image,
-                productName: state.products[index].name,
-                productPrice: state.products[index].productPrice,
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutingConstants.productDetails,
+                      arguments: state.products[index]);
+                },
+                child: ProductItem(
+                  isDrawerOpen: widget.isDrawerOpen,
+                  productImage: state.products[index].image,
+                  productName: state.products[index].name,
+                  productPrice: state.products[index].productPrice,
+                ),
               ),
               separatorBuilder: (context, index) => SizedBox(
                 width: 30.w,

@@ -4,4 +4,5 @@ abstract class AppRoutingConstants{
   static const String logIn = '/logIn';
   static const String land = '/home';
   static const String viewAll = '/viewAll';
+  static const String productDetails = '/productDetails';
 }

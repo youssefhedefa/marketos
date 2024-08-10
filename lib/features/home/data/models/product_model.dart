@@ -37,7 +37,8 @@ class ProductData extends HomeProductEntity {
           name: title,
           productPrice: price,
           image: thumbnail,
-          prodactCategory: category,
+          productCategory: category,
+          otherImages: images,
         );
 
   factory ProductData.fromJson(Map<String, dynamic> json) {

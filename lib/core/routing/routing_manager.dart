@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/features/home/data/models/view_all_model.dart';
+import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
+import 'package:marketos/features/home/ui/product_details_view.dart';
 import 'package:marketos/features/home/ui/widgets/view_all/view_all_view.dart';
 import 'package:marketos/features/land/ui/land.dart';
 import 'package:marketos/features/registration/logic/cubits/log_in_cubit/log_in_cubit.dart';
@@ -35,6 +37,10 @@ class AppRoutingManager {
       case AppRoutingConstants.viewAll:
         var args = settings.arguments as ViewAllModel;
         return MaterialPageRoute(builder: (_) => ViewAllView(viewAllModel: args,));
+      case AppRoutingConstants.productDetails:
+        var args = settings.arguments as HomeProductEntity;
+        return MaterialPageRoute(builder: (_) => ProductDetailsView(product: args,));
+
       default:
         return null;
     }

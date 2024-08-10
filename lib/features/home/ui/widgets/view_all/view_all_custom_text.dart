@@ -21,7 +21,7 @@ class ViewAllCustomTextButton extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               var model = ViewAllModel(
-                categoryName: getProductCategory(state.products[0].prodactCategory),
+                categoryName: getProductCategory(state.products[0].productCategory),
                 products: state.products,
               );
               Navigator.pushNamed(context, AppRoutingConstants.viewAll, arguments: model);

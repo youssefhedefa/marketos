@@ -19,7 +19,6 @@ class EditProfileOptionsList extends StatelessWidget {
           title: 'Change Image',
         ),
         SizedBox(height: 20.h),
-
         const EditProfileOption(
           title: 'Change Address',
         ),

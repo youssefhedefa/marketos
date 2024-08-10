@@ -96,6 +96,18 @@ class AppFireBaseHelper {
     }
   }
 
+  changeUserName({required String userId, required String name}) async {
+    var userCollection = getUserCollection();
+    var docReference = userCollection.doc(userId);
+    await docReference.update({'name': name});
+  }
+
+  changeUserAddress({required String userId, required String address}) async {
+    var userCollection = getUserCollection();
+    var docReference = userCollection.doc(userId);
+    await docReference.update({'address': address});
+  }
+
   Future<List<dynamic>> getFavorites({required String userId}) async {
     var user = await getUser(userId);
     if (user != null) {
@@ -173,4 +185,5 @@ class AppFireBaseHelper {
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
+
 }

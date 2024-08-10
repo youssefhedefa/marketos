@@ -10,7 +10,7 @@ import 'package:marketos/core/components/constance.dart';
 import 'package:marketos/features/registration/data/model/user_model.dart';
 
 class AppFireBaseHelper {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final String _userCollection = "Users";
   final String _userImageField = "images";
   final String _userFavoritesField = "favorites";
@@ -18,7 +18,7 @@ class AppFireBaseHelper {
 
   Future<UserCredential> createUser(
       {required String email, required String password}) async {
-    final auth = await _firebaseAuth.createUserWithEmailAndPassword(
+    final auth = await firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -38,7 +38,7 @@ class AppFireBaseHelper {
 
   Future<UserCredential> logIn(
       {required String email, required String password}) async {
-    final auth = await _firebaseAuth.signInWithEmailAndPassword(
+    final auth = await firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -183,7 +183,7 @@ class AppFireBaseHelper {
   }
 
   Future<void> signOut() async {
-    await _firebaseAuth.signOut();
+    await firebaseAuth.signOut();
   }
 
 }

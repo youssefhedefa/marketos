@@ -8,7 +8,7 @@ class ChangeImageUseCase{
 
   ChangeImageUseCase({required this.profileRepo});
 
-  Future<Either<Failure, UserModel>> call({required String image}) async {
+  Future<Either<Failure, dynamic>> call({required String image}) async {
     return profileRepo.changeImage(imageUrl: image);
   }
 

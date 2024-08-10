@@ -8,7 +8,7 @@ class ChangeAddressUseCase{
 
   ChangeAddressUseCase({required this.profileRepo});
 
-  Future<Either<Failure, UserModel>> call({required String address}) async {
+  Future<Either<Failure, dynamic>> call({required String address}) async {
     return profileRepo.changeAddress(address: address);
   }
 

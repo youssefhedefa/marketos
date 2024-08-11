@@ -7,6 +7,7 @@ import 'package:marketos/features/home/domain/entities/home_product_entity.dart'
 import 'package:marketos/features/home/ui/product_details_view.dart';
 import 'package:marketos/features/home/ui/widgets/view_all/view_all_view.dart';
 import 'package:marketos/features/land/ui/land.dart';
+import 'package:marketos/features/profile/ui/map_view.dart';
 import 'package:marketos/features/registration/logic/cubits/log_in_cubit/log_in_cubit.dart';
 import 'package:marketos/features/registration/logic/cubits/sign_in_cubit/sign_in_cubit.dart';
 import 'package:marketos/features/registration/ui/forms/log_in_form.dart';
@@ -40,7 +41,8 @@ class AppRoutingManager {
       case AppRoutingConstants.productDetails:
         var args = settings.arguments as HomeProductEntity;
         return MaterialPageRoute(builder: (_) => ProductDetailsView(product: args,));
-
+        case AppRoutingConstants.map:
+        return MaterialPageRoute(builder: (_) => const MapView());
       default:
         return null;
     }

@@ -73,7 +73,7 @@ class AppFireBaseHelper {
     return user;
   }
 
-  updateUserImage(String userId, String image) async {
+  updateUserImage({required String userId,required String image}) async {
     var userCollection = getUserCollection();
     var docReference = userCollection.doc(userId);
     await docReference.update({_userImageField: image});

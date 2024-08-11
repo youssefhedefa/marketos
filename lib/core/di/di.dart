@@ -10,7 +10,9 @@ import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categ
 import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
 import 'package:marketos/features/profile/data/repo_imple/profile_repo_imple.dart';
 import 'package:marketos/features/profile/domain/repo/profile_repo.dart';
+import 'package:marketos/features/profile/domain/use_cases/change_image_use_case.dart';
 import 'package:marketos/features/profile/domain/use_cases/change_name_use_case.dart';
+import 'package:marketos/features/profile/logic/cubits/change_image_cubit/change_image_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/change_name_cubit/change_name_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_profile_cubit.dart';
 import 'package:marketos/features/registration/data/repo_imple/registration_repo_imple.dart';
@@ -47,9 +49,12 @@ void setupDependencyInjection() async {
   // profile
 
   getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepoImple(appFireBaseHelper: getIt<AppFireBaseHelper>()));
+  getIt.registerLazySingleton<GetProfileCubit>(() => GetProfileCubit(repo: getIt<ProfileRepo>()));
+
   getIt.registerLazySingleton<ChangeNameUseCase>(() => ChangeNameUseCase(profileRepo: getIt<ProfileRepo>()));
   getIt.registerLazySingleton<ChangeNameCubit>(() => ChangeNameCubit(useCase: getIt<ChangeNameUseCase>()));
 
-  getIt.registerLazySingleton<GetProfileCubit>(() => GetProfileCubit(repo: getIt<ProfileRepo>()));
+  getIt.registerLazySingleton<ChangeImageUseCase>(() => ChangeImageUseCase(profileRepo: getIt<ProfileRepo>()));
+  getIt.registerLazySingleton<ChangeImageCubit>(() => ChangeImageCubit(useCase: getIt<ChangeImageUseCase>()));
 
 }

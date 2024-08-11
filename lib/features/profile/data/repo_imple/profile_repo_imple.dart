@@ -18,9 +18,18 @@ class ProfileRepoImple extends ProfileRepo {
   }
 
   @override
-  Future<Either<Failure, UserModel>> changeImage({required String imageUrl}) {
-    // TODO: implement changeImage
-    throw UnimplementedError();
+  Future<Either<Failure, dynamic>> changeImage({required String imageUrl}) async{
+    try{
+      var result = await appFireBaseHelper.updateUserImage(
+          userId: appFireBaseHelper.firebaseAuth.currentUser!.uid,
+          image: imageUrl
+      );
+      return Right(result);
+    }
+    catch(e){
+      print(e.toString());
+      return Left(Failure(message: e.toString()));
+    }
   }
 
   @override

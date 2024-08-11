@@ -6,6 +6,7 @@ import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
 import 'package:marketos/features/profile/logic/cubits/change_name_cubit/change_name_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/change_name_cubit/change_name_states.dart';
+import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_profile_cubit.dart';
 import 'package:marketos/features/profile/ui/widgets/edit_profile_option.dart';
 
 class EditProfileOptionsList extends StatefulWidget {
@@ -45,8 +46,15 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
     showModalBottomSheet(
       context: context,
       builder: (newContext) {
-        return BlocProvider.value(
-          value: getIt<ChangeNameCubit>(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider.value(
+              value: getIt<ChangeNameCubit>(),
+            ),
+            BlocProvider.value(
+              value: getIt<GetProfileCubit>(),
+            )
+          ],
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
@@ -81,6 +89,8 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
                     if (state is ChangeNameSuccess) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Name changed successfully')));
+                      context.read<ChangeNameCubit>().nameController.clear();
+                      context.read<GetProfileCubit>().getProfile();
                       Navigator.pop(context);
                       Navigator.pop(context);
                     }
@@ -110,4 +120,5 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
       },
     );
   }
+
 }

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:marketos/core/failure/failure.dart';
 import 'package:marketos/core/networking/firebase/firebase_helper.dart';
 import 'package:marketos/features/profile/domain/repo/profile_repo.dart';
@@ -18,11 +19,12 @@ class ProfileRepoImple extends ProfileRepo {
   }
 
   @override
-  Future<Either<Failure, dynamic>> changeImage({required String imageUrl}) async{
+  Future<Either<Failure, dynamic>> changeImage({required XFile image}) async{
     try{
+      String? imageUrl = await appFireBaseHelper.uploadImage(file: image);
       var result = await appFireBaseHelper.updateUserImage(
           userId: appFireBaseHelper.firebaseAuth.currentUser!.uid,
-          image: imageUrl
+          image: imageUrl!
       );
       return Right(result);
     }

@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marketos/core/components/custom_button.dart';
 import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
+import 'package:marketos/features/profile/logic/cubits/change_image_cubit/change_image_cubit.dart';
+import 'package:marketos/features/profile/logic/cubits/change_image_cubit/change_image_states.dart';
 import 'package:marketos/features/profile/logic/cubits/change_name_cubit/change_name_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/change_name_cubit/change_name_states.dart';
 import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_profile_cubit.dart';
@@ -30,8 +32,15 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
           },
         ),
         SizedBox(height: 20.h),
-        const EditProfileOption(
-          title: 'Change Image',
+        BlocBuilder<ChangeImageCubit, ChangeImageState>(
+          builder: (context, state) {
+            return EditProfileOption(
+              title: 'Change Image',
+              onTap: () {
+                changeImage();
+              },
+            );
+          },
         ),
         SizedBox(height: 20.h),
         const EditProfileOption(
@@ -72,6 +81,14 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
                 SizedBox(height: 40.h),
                 BlocConsumer<ChangeNameCubit, ChangeNameState>(
                   builder: (context, state) {
+                    if (state is ChangeImageLoading) {
+                      return SizedBox(
+                        height: 70.h,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
                     return CustomButton(
                       text: 'Change Name',
                       onTap: () {
@@ -121,4 +138,20 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
     );
   }
 
+  changeImage() {
+    context.read<ChangeImageCubit>().pickImage().then((value) {
+      if (value != null) {
+        context.read<ChangeImageCubit>().changeImage(image: value);
+        context.read<GetProfileCubit>().getProfile();
+      }
+    }).catchError((e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'No image selected',
+          ),
+        ),
+      );
+    });
+  }
 }

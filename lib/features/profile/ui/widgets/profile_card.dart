@@ -6,10 +6,22 @@ import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_pro
 import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_profile_states.dart';
 
 
-class ProfileCard extends StatelessWidget {
+class ProfileCard extends StatefulWidget {
   const ProfileCard({super.key, required this.isDrawerOpened});
 
   final bool isDrawerOpened;
+
+  @override
+  State<ProfileCard> createState() => _ProfileCardState();
+}
+
+class _ProfileCardState extends State<ProfileCard> {
+
+  @override
+  void initState() {
+    context.read<GetProfileCubit>().getProfile();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +29,12 @@ class ProfileCard extends StatelessWidget {
       builder: (context,state) {
         if(state is GetProfileSuccess){
           return SizedBox(
-            height: isDrawerOpened ? 200.h : 250.h,
+            height: widget.isDrawerOpened ? 200.h : 250.h,
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: [
                 Container(
-                  height: isDrawerOpened ? 170.h :  210.h,
+                  height: widget.isDrawerOpened ? 170.h :  210.h,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -31,7 +43,7 @@ class ProfileCard extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      SizedBox(height: isDrawerOpened ? 10.h :  46.h),
+                      SizedBox(height: widget.isDrawerOpened ? 10.h :  46.h),
                       Text(
                         state.profile.name,
                         style: AppTextStyleHelper.font32BlackBold,
@@ -49,11 +61,16 @@ class ProfileCard extends StatelessWidget {
                 ),
                 Positioned(
                   top: 0,
-                  child: CircleAvatar(
-                    radius: isDrawerOpened ? 20.r :  56.r,
-                    backgroundColor: Colors.white,
-                    child:
-                    Image.network(state.profile.imageUrl),
+                  child: Container(
+                    width: 110.w,
+                    height: 110.h,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: NetworkImage(state.profile.imageUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -62,9 +79,9 @@ class ProfileCard extends StatelessWidget {
         }
         else if(state is GetProfileFailed){
           return SizedBox(
-            height: isDrawerOpened ? 200.h : 250.h,
+            height: widget.isDrawerOpened ? 200.h : 250.h,
             child: Container(
-              height: isDrawerOpened ? 170.h :  210.h,
+              height: widget.isDrawerOpened ? 170.h :  210.h,
               width: double.infinity,
               padding: EdgeInsets.all(20.r),
               decoration: BoxDecoration(
@@ -74,7 +91,7 @@ class ProfileCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(height: isDrawerOpened ? 10.h :  46.h),
+                  SizedBox(height: widget.isDrawerOpened ? 10.h :  46.h),
                   Text(
                     'Error',
                     style: AppTextStyleHelper.font32BlackBold,
@@ -90,9 +107,9 @@ class ProfileCard extends StatelessWidget {
         }
         else{
           return SizedBox(
-            height: isDrawerOpened ? 200.h : 250.h,
+            height: widget.isDrawerOpened ? 200.h : 250.h,
             child: Container(
-              height: isDrawerOpened ? 170.h :  210.h,
+              height: widget.isDrawerOpened ? 170.h :  210.h,
               width: double.infinity,
               padding: EdgeInsets.all(20.r),
               decoration: BoxDecoration(
@@ -102,7 +119,7 @@ class ProfileCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(height: isDrawerOpened ? 10.h :  46.h),
+                  SizedBox(height: widget.isDrawerOpened ? 10.h :  46.h),
                   Text(
                     'Loading..',
                     style: AppTextStyleHelper.font32BlackBold,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class CustomButton extends StatelessWidget {
@@ -15,7 +16,7 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 70,
+        height: 70.h,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(6),

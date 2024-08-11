@@ -12,7 +12,7 @@ import 'package:marketos/features/registration/data/model/user_model.dart';
 class AppFireBaseHelper {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final String _userCollection = "Users";
-  final String _userImageField = "images";
+  final String _userImageField = "imageUrl";
   final String _userFavoritesField = "favorites";
   final String _userCartField = "cart";
 

@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:geolocator/geolocator.dart';
 
 abstract class GetCurrentLocation{
@@ -13,13 +14,37 @@ abstract class GetCurrentLocation{
     return await Geolocator.isLocationServiceEnabled();
   }
 
-  static getCurrentLocation() async {
+  static Future<Either<Position, String>> getCurrentLocation() async {
 
-    if(await checkPermission() && await checkService()){
-      return await Geolocator.getCurrentPosition();
+    if(!await checkPermission()){
+      return Right(CheckConstantsExtension(CheckConstants.permission).value);
     }
-    return null;
-
+    else if(!await checkService()){
+      return Right(CheckConstantsExtension(CheckConstants.service).value);
+    }
+    else{
+      return Left(await Geolocator.getCurrentPosition());
+    }
   }
+}
 
+
+enum CheckConstants{
+  permission,
+  service
+}
+
+
+
+extension CheckConstantsExtension on CheckConstants{
+  String get value{
+    switch(this){
+      case CheckConstants.permission:
+        return 'Permission not granted';
+      case CheckConstants.service:
+        return 'Location service not enabled';
+      default:
+        return '';
+    }
+  }
 }

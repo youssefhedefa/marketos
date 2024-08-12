@@ -7,6 +7,8 @@ import 'package:marketos/features/home/domain/entities/home_product_entity.dart'
 import 'package:marketos/features/home/ui/product_details_view.dart';
 import 'package:marketos/features/home/ui/widgets/view_all/view_all_view.dart';
 import 'package:marketos/features/land/ui/land.dart';
+import 'package:marketos/features/profile/logic/cubits/change_address_cubit/change_Address_cubit.dart';
+import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_profile_cubit.dart';
 import 'package:marketos/features/profile/ui/map_view.dart';
 import 'package:marketos/features/registration/logic/cubits/log_in_cubit/log_in_cubit.dart';
 import 'package:marketos/features/registration/logic/cubits/sign_in_cubit/sign_in_cubit.dart';
@@ -42,7 +44,12 @@ class AppRoutingManager {
         var args = settings.arguments as HomeProductEntity;
         return MaterialPageRoute(builder: (_) => ProductDetailsView(product: args,));
         case AppRoutingConstants.map:
-        return MaterialPageRoute(builder: (_) => const MapView());
+        return MaterialPageRoute(builder: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create:(context)=> getIt<ChangeAddressCubit>()),
+            BlocProvider(create: (context)=> getIt<GetProfileCubit>()),
+          ],
+            child: const MapView(),),);
       default:
         return null;
     }

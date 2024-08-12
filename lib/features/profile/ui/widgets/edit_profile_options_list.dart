@@ -5,6 +5,7 @@ import 'package:marketos/core/components/custom_button.dart';
 import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
+import 'package:marketos/features/profile/logic/cubits/change_address_cubit/change_Address_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/change_image_cubit/change_image_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/change_image_cubit/change_image_states.dart';
 import 'package:marketos/features/profile/logic/cubits/change_name_cubit/change_name_cubit.dart';
@@ -44,11 +45,14 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
           },
         ),
         SizedBox(height: 20.h),
-        EditProfileOption(
-          title: 'Change Address',
-          onTap: () {
-            Navigator.pushNamed(context, AppRoutingConstants.map);
-          },
+        BlocProvider.value(
+          value: getIt<ChangeAddressCubit>(),
+          child: EditProfileOption(
+            title: 'Change Address',
+            onTap: () {
+              Navigator.pushNamed(context, AppRoutingConstants.map);
+            },
+          ),
         ),
         SizedBox(height: 20.h),
       ],

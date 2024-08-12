@@ -13,9 +13,18 @@ class ProfileRepoImple extends ProfileRepo {
 
 
   @override
-  Future<Either<Failure, UserModel>> changeAddress({required String address}) {
-    // TODO: implement changeAddress
-    throw UnimplementedError();
+  Future<Either<Failure, dynamic>> changeAddress({required String address}) async {
+    try{
+      var result = appFireBaseHelper.changeUserAddress(
+          userId: appFireBaseHelper.firebaseAuth.currentUser!.uid,
+          address: address
+      );
+      return Right(result);
+    }
+    catch(e){
+      print(e.toString());
+      return Left(Failure(message: e.toString()));
+    }
   }
 
   @override

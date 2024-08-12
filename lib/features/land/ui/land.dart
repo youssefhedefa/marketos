@@ -84,7 +84,7 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
       MultiBlocProvider(
         providers: [
           BlocProvider.value(
-            value : getIt<GetProfileCubit>(),
+            value: getIt<GetProfileCubit>(),
           ),
           BlocProvider(
             create: (context) => getIt<ChangeNameCubit>(),

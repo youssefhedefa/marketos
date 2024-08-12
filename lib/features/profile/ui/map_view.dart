@@ -1,13 +1,15 @@
 // ignore_for_file: avoid_print
-
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
 import 'package:marketos/features/profile/data/map_init/get_current_location.dart';
+import 'package:marketos/features/profile/logic/cubits/change_address_cubit/change_Address_cubit.dart';
+import 'package:marketos/features/profile/logic/cubits/change_address_cubit/change_address_states.dart';
+import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_profile_cubit.dart';
 
 class MapView extends StatefulWidget {
   const MapView({super.key});
@@ -17,19 +19,17 @@ class MapView extends StatefulWidget {
 }
 
 class MapViewState extends State<MapView> {
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  late CameraPosition _kGooglePlex;
 
   Set<Marker> markers = {};
 
   @override
   void initState() {
-    getCurrentLocation();
+    _kGooglePlex = const CameraPosition(
+      target: LatLng(37.42796133580664, -122.085749655962),
+      zoom: 14.4746,
+    );
+    getCurrentLocation(getLocation: false);
     super.initState();
   }
 
@@ -41,26 +41,40 @@ class MapViewState extends State<MapView> {
         mapType: MapType.normal,
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
+          context.read<ChangeAddressCubit>().controller.complete(controller);
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          getCurrentLocation();
-        },
-        backgroundColor: AppColorHelper.primaryColor,
-        label: Text(
-            'Current Location',
-          style: AppTextStyleHelper.font26WhiteBold,
-        ),
-        icon: const Icon(Icons.location_on,color: Colors.white,),
+      floatingActionButton: BlocBuilder<ChangeAddressCubit,ChangeAddressState>(
+        builder: (context,state) {
+          if(state is ChangeAddressLoading) {
+            return FloatingActionButton(
+              onPressed: () {},
+                child: const CircularProgressIndicator(),
+            );
+          }
+          return FloatingActionButton.extended(
+            onPressed: () {
+              getCurrentLocation(getLocation: true);
+            },
+            backgroundColor: AppColorHelper.primaryColor,
+            label: Text(
+              'Current Location',
+              style: AppTextStyleHelper.font26WhiteBold,
+            ),
+            icon: const Icon(
+              Icons.location_on,
+              color: Colors.white,
+            ),
+          );
+        }
       ),
     );
   }
 
   Future<void> _goToCurrentPosition({required Position position}) async {
-    final GoogleMapController controller = await _controller.future;
+    final GoogleMapController controller =
+        await context.read<ChangeAddressCubit>().controller.future;
     await controller.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -78,81 +92,69 @@ class MapViewState extends State<MapView> {
     );
   }
 
-  getCurrentLocation() async {
+  getCurrentLocation({required bool getLocation}) async {
     var result = await GetCurrentLocation.getCurrentLocation();
-    result.fold((position) {
-      print(position);
-      _goToCurrentPosition(
-        position: position,
-      );
-      _getAddressFromLatLng(position);
-    },
-            (error) {
-      print(error);
-
-      String permissionError =
-          CheckConstantsExtension(CheckConstants.permission).value;
-      String serviceError =
-          CheckConstantsExtension(CheckConstants.service).value;
-
-      if (error == permissionError) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Permission Error'),
-            content: const Text('Permission not granted'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Geolocator.openAppSettings();
-                  Navigator.pop(context);
-                },
-                child: const Text('Setting'),
-              ),
-            ],
-          ),
+    result.fold(
+      (position) {
+        print(position);
+        _goToCurrentPosition(
+          position: position,
         );
-      } else if (error == serviceError) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Service Error'),
-            content: const Text('Location service not enabled'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Geolocator.openLocationSettings();
-                  Navigator.pop(context);
-                },
-                child: const Text('Setting'),
-              ),
-            ],
-          ),
-        );
-      } else {
-        print('Unknown error');
-      }
-    });
-
-    setState(() {
-
-    });
+        getLocation ? context.read<ChangeAddressCubit>().changeAddress(address: position) : null;
+        getLocation ? context.read<GetProfileCubit>().getProfile(): null;
+        getLocation ? Navigator.pop(context) : null;
+      },
+      (error) {
+        alertsBuilder(error: error);
+      },
+    );
+    setState(() {});
   }
 
-  String _currentAddress = '';
+  alertsBuilder({required String error}) {
+    print(error);
+    String permissionError =
+        CheckConstantsExtension(CheckConstants.permission).value;
+    String serviceError =
+        CheckConstantsExtension(CheckConstants.service).value;
 
-  Future<void> _getAddressFromLatLng(Position position) async {
-    await placemarkFromCoordinates(
-        position.latitude, position.longitude)
-        .then((List<Placemark> placeMarks) {
-      Placemark place = placeMarks[0];
-      setState(() {
-        _currentAddress = '${place.locality}, ${place.country}';
-      });
-      print(_currentAddress);
-    }).catchError((e) {
-      debugPrint(e);
-    });
+    if (error == permissionError) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Permission Error'),
+          content: const Text('Permission not granted'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Geolocator.openAppSettings();
+                Navigator.pop(context);
+              },
+              child: const Text('Setting'),
+            ),
+          ],
+        ),
+      );
+    } else if (error == serviceError) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Service Error'),
+          content: const Text('Location service not enabled'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Geolocator.openLocationSettings();
+                Navigator.pop(context);
+              },
+              child: const Text('Setting'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      print('Unknown error');
+    }
   }
 
 }

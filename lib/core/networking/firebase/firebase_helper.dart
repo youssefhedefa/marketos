@@ -15,6 +15,7 @@ class AppFireBaseHelper {
   final String _userImageField = "imageUrl";
   final String _userFavoritesField = "favorites";
   final String _userCartField = "cart";
+  final String _userAddressField = "address";
 
   Future<UserCredential> createUser(
       {required String email, required String password}) async {
@@ -105,7 +106,7 @@ class AppFireBaseHelper {
   changeUserAddress({required String userId, required String address}) async {
     var userCollection = getUserCollection();
     var docReference = userCollection.doc(userId);
-    await docReference.update({'address': address});
+    await docReference.update({_userAddressField: address});
   }
 
   Future<List<dynamic>> getFavorites({required String userId}) async {

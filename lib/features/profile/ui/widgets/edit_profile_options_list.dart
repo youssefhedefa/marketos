@@ -14,7 +14,9 @@ import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_pro
 import 'package:marketos/features/profile/ui/widgets/edit_profile_option.dart';
 
 class EditProfileOptionsList extends StatefulWidget {
-  const EditProfileOptionsList({super.key});
+  const EditProfileOptionsList({super.key, required this.isDrawerOpened});
+
+  final bool isDrawerOpened;
 
   @override
   State<EditProfileOptionsList> createState() => _EditProfileOptionsListState();
@@ -29,6 +31,7 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
       children: [
         EditProfileOption(
           title: 'Change Name',
+          isDrawerOpened: widget.isDrawerOpened,
           onTap: () {
             nameBottomSheet();
           },
@@ -38,6 +41,7 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
           builder: (context, state) {
             return EditProfileOption(
               title: 'Change Image',
+              isDrawerOpened: widget.isDrawerOpened,
               onTap: () {
                 changeImage();
               },
@@ -48,6 +52,7 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
         BlocProvider.value(
           value: getIt<ChangeAddressCubit>(),
           child: EditProfileOption(
+            isDrawerOpened: widget.isDrawerOpened,
             title: 'Change Address',
             onTap: () {
               Navigator.pushNamed(context, AppRoutingConstants.map);

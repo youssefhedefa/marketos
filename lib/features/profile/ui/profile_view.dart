@@ -15,7 +15,9 @@ class ProfileView extends StatelessWidget {
           isDrawerOpened: isDrawerOpened,
         ),
         const SizedBox(height: 20),
-        const EditProfileOptionsList(),
+        EditProfileOptionsList(
+          isDrawerOpened: isDrawerOpened,
+        ),
       ],
     );
   }

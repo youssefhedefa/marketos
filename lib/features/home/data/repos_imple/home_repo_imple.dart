@@ -62,4 +62,15 @@ class HomeRepoImple implements HomeRepo {
     }
   }
 
+  @override
+  Future<Either<Failure, void>> removeFromCart({required int productID}) async {
+    try{
+      final result = await appFireBaseHelper.removeFromCart(userId: appFireBaseHelper.firebaseAuth.currentUser!.uid, productId: productID.toString());
+      return Right(result);
+    }
+    catch(e){
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
 }

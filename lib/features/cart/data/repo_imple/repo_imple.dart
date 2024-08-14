@@ -47,6 +47,8 @@ class CartRepoImple implements CartRepo {
         name: result.name,
         price: result.productPrice,
         image: result.image,
+        images: result.images,
+        description: result.description
       );
       return Right(product);
     }

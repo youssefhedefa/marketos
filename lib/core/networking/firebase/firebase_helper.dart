@@ -164,13 +164,13 @@ class AppFireBaseHelper {
   }
 
   Future<void> removeFromCart(
-      {required String userId, required String animeId}) async {
+      {required String userId, required String productId}) async {
     var userCollection = getUserCollection();
     var docReference = userCollection.doc(userId);
     var user = await getUser(userId);
     if (user != null) {
       var watchList = user.cart;
-      watchList.remove(animeId);
+      watchList.remove(productId);
       await docReference.update({_userCartField: watchList});
     }
   }

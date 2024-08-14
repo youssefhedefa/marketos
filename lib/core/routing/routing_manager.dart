@@ -6,6 +6,7 @@ import 'package:marketos/features/home/data/models/view_all_model.dart';
 import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
 import 'package:marketos/features/home/logic/cubits/add_to_cart_cubit/add_to_cart_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/check_product_cubit/check_product_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/remove_from_cart_cubit/remove_from_cart_cubit.dart';
 import 'package:marketos/features/home/ui/product_details_view.dart';
 import 'package:marketos/features/home/ui/widgets/view_all/view_all_view.dart';
 import 'package:marketos/features/land/ui/land.dart';
@@ -48,6 +49,7 @@ class AppRoutingManager {
           providers: [
             BlocProvider(create:(context)=> getIt<CheckProductCubit>()..checkProduct(productId: args.productID)),
             BlocProvider(create: (context)=> getIt<AddToCartCubit>()),
+            BlocProvider(create: (context)=> getIt<RemoveFromCartCubit>()),
           ],
             child: ProductDetailsView(product: args,),),);
         case AppRoutingConstants.map:

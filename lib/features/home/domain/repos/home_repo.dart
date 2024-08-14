@@ -18,4 +18,5 @@ abstract class HomeRepo{
 
   Future<Either<Failure,dynamic>> addToCart({required int productID});
   Future<Either<Failure,bool>> checkIfProductIsInCart({required int productID});
+  Future<Either<Failure,dynamic>> removeFromCart({required int productID});
 }

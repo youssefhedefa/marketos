@@ -2,10 +2,17 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:marketos/core/networking/api/dio_factory.dart';
 import 'package:marketos/core/networking/firebase/firebase_helper.dart';
+import 'package:marketos/features/cart/data/apis/cart_api_services.dart';
+import 'package:marketos/features/cart/data/repo_imple/repo_imple.dart';
+import 'package:marketos/features/cart/domain/repo/cart_repo.dart';
+import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_cubit.dart';
 import 'package:marketos/features/home/data/apis/home_api_service.dart';
 import 'package:marketos/features/home/data/repos_imple/home_repo_imple.dart';
 import 'package:marketos/features/home/domain/repos/home_repo.dart';
+import 'package:marketos/features/home/domain/use_cases/add_to_cart_use_case.dart';
 import 'package:marketos/features/home/domain/use_cases/get_products_by_category_use_case.dart';
+import 'package:marketos/features/home/logic/cubits/add_to_cart_cubit/add_to_cart_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/check_product_cubit/check_product_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categories_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
 import 'package:marketos/features/profile/data/repo_imple/profile_repo_imple.dart';
@@ -43,7 +50,7 @@ void setupDependencyInjection() async {
 
   // home
 
-  getIt.registerLazySingleton<HomeRepo>(() => HomeRepoImple(homeApiService: getIt<HomeApiService>()));
+  getIt.registerLazySingleton<HomeRepo>(() => HomeRepoImple(homeApiService: getIt<HomeApiService>(), appFireBaseHelper: getIt<AppFireBaseHelper>()));
   getIt.registerLazySingleton<GetProductsByCategoryUseCase>(() => GetProductsByCategoryUseCase(homeRepo: getIt<HomeRepo>()));
   getIt.registerLazySingleton<GetCategoriesCubit>(() => GetCategoriesCubit(homeRepo: getIt<HomeRepo>()));
   getIt.registerLazySingleton<GetProductByCategoryCubit>(() => GetProductByCategoryCubit(useCase: getIt<GetProductsByCategoryUseCase>()));
@@ -62,4 +69,13 @@ void setupDependencyInjection() async {
   getIt.registerLazySingleton<ChangeAddressUseCase>(() => ChangeAddressUseCase(profileRepo: getIt<ProfileRepo>()));
   getIt.registerLazySingleton<ChangeAddressCubit>(() => ChangeAddressCubit(useCase: getIt<ChangeAddressUseCase>()));
 
+  // cart
+  getIt.registerLazySingleton<CartApiService>(() => CartApiService(dio));
+  getIt.registerLazySingleton<CartRepo>(() => CartRepoImple(appFireBaseHelper: getIt<AppFireBaseHelper>(), cartApiService: getIt<CartApiService>()));
+  getIt.registerLazySingleton<GetCartCubit>(() => GetCartCubit(cartRepo: getIt<CartRepo>()));
+
+  getIt.registerLazySingleton<AddToCartUseCase>(() => AddToCartUseCase(homeRepo: getIt<HomeRepo>()));
+  getIt.registerLazySingleton<AddToCartCubit>(() => AddToCartCubit(useCase: getIt<AddToCartUseCase>()));
+
+  getIt.registerLazySingleton<CheckProductCubit>(() => CheckProductCubit(homeRepo: getIt<HomeRepo>()));
 }

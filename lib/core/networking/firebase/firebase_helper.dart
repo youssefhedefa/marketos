@@ -147,20 +147,20 @@ class AppFireBaseHelper {
   }
 
   Future<String> addToCart(
-      {required String userId, required String animeId}) async {
+      {required String userId, required String productId}) async {
     var userCollection = getUserCollection();
     var docReference = userCollection.doc(userId);
     var user = await getUser(userId);
     if (user != null) {
       var watchList = user.cart;
-      if (watchList.contains(animeId)) {
-        return "Already in watch list";
+      if (watchList.contains(productId)) {
+        return cartStates[CartStates.alreadyInWatchList]!;
       }
-      watchList.add(animeId);
+      watchList.add(productId);
       await docReference.update({_userCartField: watchList});
-      return "Added to watch list";
+      return cartStates[CartStates.addedToWatchList]!;
     }
-    return "User not found";
+    return cartStates[CartStates.error]!;
   }
 
   Future<void> removeFromCart(
@@ -188,3 +188,27 @@ class AppFireBaseHelper {
   }
 
 }
+
+enum CartStates{
+  error,
+  alreadyInWatchList,
+  addedToWatchList,
+}
+
+enum FavoriteStates{
+  error,
+  alreadyInFavorites,
+  addedToFavorites,
+}
+
+Map<CartStates, String> cartStates = {
+  CartStates.error: 'User not found',
+  CartStates.alreadyInWatchList: 'Already in watch list',
+  CartStates.addedToWatchList: 'Added to watch list',
+};
+
+Map<FavoriteStates, String> favoriteStates = {
+  FavoriteStates.error: 'Error',
+  FavoriteStates.alreadyInFavorites: 'Already in favorites',
+  FavoriteStates.addedToFavorites: 'Added to favorites',
+};

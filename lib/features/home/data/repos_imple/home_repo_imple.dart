@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:marketos/core/failure/failure.dart';
+import 'package:marketos/core/networking/firebase/firebase_helper.dart';
 import 'package:marketos/features/home/data/apis/home_api_service.dart';
 import 'package:marketos/features/home/domain/entities/category_entity.dart';
 import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
@@ -8,8 +9,11 @@ import 'package:marketos/features/home/domain/repos/home_repo.dart';
 class HomeRepoImple implements HomeRepo {
   @override
   final HomeApiService homeApiService;
+  @override
+  final AppFireBaseHelper appFireBaseHelper;
 
-  HomeRepoImple({required this.homeApiService});
+
+  HomeRepoImple({required this.homeApiService,required this.appFireBaseHelper});
 
   @override
   Future<Either<Failure, List<CategoryEntity>>> getHomeCategories() async {
@@ -30,4 +34,32 @@ class HomeRepoImple implements HomeRepo {
       return Left(Failure(message: error.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, dynamic>> addToCart({required int productID}) async {
+    try{
+      final result = await appFireBaseHelper.addToCart(userId: appFireBaseHelper.firebaseAuth.currentUser!.uid, productId: productID.toString());
+      return Right(result);
+    }
+    catch(e){
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> checkIfProductIsInCart({required int productID}) async {
+    try{
+      final result = await appFireBaseHelper.getCart(userId: appFireBaseHelper.firebaseAuth.currentUser!.uid);
+      if(result.contains(productID.toString())){
+        return const Right(true);
+      }
+      else{
+        return const Right(false);
+      }
+    }
+    catch(e){
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
 }

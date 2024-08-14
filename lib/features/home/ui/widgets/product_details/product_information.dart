@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketos/core/components/custom_button.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
+import 'package:marketos/features/home/logic/cubits/add_to_cart_cubit/add_to_cart_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/add_to_cart_cubit/add_to_cart_states.dart';
+import 'package:marketos/features/home/logic/cubits/check_product_cubit/check_product_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/check_product_cubit/check_product_states.dart';
 
 
 class ProductInformation extends StatelessWidget {
@@ -53,11 +58,50 @@ class ProductInformation extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              CustomButton(
-                onTap: () {},
-                text: 'Add to Basket',
-                textStyle: AppTextStyleHelper.font26WhiteBold,
-                color: AppColorHelper.primaryColor,
+              BlocBuilder<CheckProductCubit,CheckProductState>(
+                builder: (context,checkProductState) {
+                  if (checkProductState is CheckProductErrorState) {
+                    return Text(checkProductState.message);
+                  }
+                  if (checkProductState is CheckProductSuccessState) {
+                    return BlocConsumer<AddToCartCubit,AddToCartState>(
+                      builder: (context,state) {
+                        return CustomButton(
+                          onTap: () {
+                            if(checkProductState.isProductInCart){
+                              print('object');
+                            }
+                            else {
+                              context.read<AddToCartCubit>().addToCart(productId: id);
+                            }
+                          },
+                          text: checkProductState.isProductInCart ? 'Remove from Cart' : 'Add to Cart',
+                          textStyle: AppTextStyleHelper.font26WhiteBold,
+                          color: AppColorHelper.primaryColor,
+                        );
+                      },
+                      listener: (context,state) {
+                        if (state is AddToCartSuccessState) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Product added to cart'),
+                            ),
+                          );
+                          context.read<CheckProductCubit>().checkProduct(productId: id);
+                        }
+                        if (state is AddToCartErrorState) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(state.message),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
+                      },
+                    );
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                }
               ),
               const SizedBox(height: 20),
             ],

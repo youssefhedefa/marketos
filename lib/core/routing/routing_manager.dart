@@ -4,6 +4,8 @@ import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/features/home/data/models/view_all_model.dart';
 import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
+import 'package:marketos/features/home/logic/cubits/add_to_cart_cubit/add_to_cart_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/check_product_cubit/check_product_cubit.dart';
 import 'package:marketos/features/home/ui/product_details_view.dart';
 import 'package:marketos/features/home/ui/widgets/view_all/view_all_view.dart';
 import 'package:marketos/features/land/ui/land.dart';
@@ -42,7 +44,12 @@ class AppRoutingManager {
         return MaterialPageRoute(builder: (_) => ViewAllView(viewAllModel: args,));
       case AppRoutingConstants.productDetails:
         var args = settings.arguments as HomeProductEntity;
-        return MaterialPageRoute(builder: (_) => ProductDetailsView(product: args,));
+        return MaterialPageRoute(builder: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create:(context)=> getIt<CheckProductCubit>()..checkProduct(productId: args.productID)),
+            BlocProvider(create: (context)=> getIt<AddToCartCubit>()),
+          ],
+            child: ProductDetailsView(product: args,),),);
         case AppRoutingConstants.map:
         return MaterialPageRoute(builder: (_) => MultiBlocProvider(
           providers: [

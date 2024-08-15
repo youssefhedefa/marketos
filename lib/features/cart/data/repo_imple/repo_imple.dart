@@ -2,15 +2,18 @@ import 'package:dartz/dartz.dart';
 import 'package:marketos/core/failure/failure.dart';
 import 'package:marketos/core/networking/firebase/firebase_helper.dart';
 import 'package:marketos/features/cart/data/apis/cart_api_services.dart';
+import 'package:marketos/features/cart/data/apis/payment/payment_api_services.dart';
 import 'package:marketos/features/cart/data/cart_model.dart';
 import 'package:marketos/features/cart/domain/entities/cart_product_entity.dart';
+import 'package:marketos/features/cart/domain/entities/payment_method_entity.dart';
 import 'package:marketos/features/cart/domain/repo/cart_repo.dart';
 
 class CartRepoImple implements CartRepo {
   final AppFireBaseHelper appFireBaseHelper;
   final CartApiService cartApiService;
+  final PaymentApiService paymentApiService;
 
-  CartRepoImple({required this.appFireBaseHelper,required this.cartApiService});
+  CartRepoImple({required this.appFireBaseHelper,required this.cartApiService,required this.paymentApiService});
 
   @override
   Future<Either<Failure, CartModel>> getCartProducts() async {
@@ -57,6 +60,17 @@ class CartRepoImple implements CartRepo {
         description: result.description
       );
       return Right(product);
+    }
+    catch(e){
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PaymentMethodEntity>>> getPaymentMethods() async {
+    try{
+      final result = await paymentApiService.getPaymentMethods();
+      return Right(result.data);
     }
     catch(e){
       return Left(Failure(message: e.toString()));

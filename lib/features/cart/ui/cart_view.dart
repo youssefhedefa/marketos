@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_cubit.dart';
 import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_states.dart';
-import 'package:marketos/features/cart/logic/cubits/order_now_cubit/order_now_cubit.dart';
 import 'package:marketos/features/cart/ui/widgets/empty_cart.dart';
 import 'package:marketos/features/cart/ui/widgets/list_of_items.dart';
 

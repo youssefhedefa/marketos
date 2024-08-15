@@ -7,6 +7,8 @@ import 'package:marketos/core/helpers/font_style_helper.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/features/cart/domain/entities/cart_product_entity.dart';
 import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_cubit.dart';
+import 'package:marketos/features/cart/logic/cubits/get_payment_methods_cubit/get_payment_methods_cubit.dart';
+import 'package:marketos/features/cart/logic/cubits/get_payment_methods_cubit/get_payment_methods_state.dart';
 import 'package:marketos/features/cart/ui/widgets/item.dart';
 import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
 
@@ -75,13 +77,25 @@ class ListOfItems extends StatelessWidget {
               ),
             ],
           ),
-          CustomButton(
-              onTap: () {
-
-              },
-              text: 'Order Now',
-              textStyle: AppTextStyleHelper.font26WhiteBold,
-              color: AppColorHelper.primaryColor,
+          BlocConsumer<GetPaymentMethodsCubit,GetPaymentMethodsState>(
+            builder: (context,state) {
+              if(state is GetPaymentMethodsLoading){
+                return const Center(child: CircularProgressIndicator());
+              }
+              return CustomButton(
+                  onTap: () {
+                    context.read<GetPaymentMethodsCubit>().getPaymentMethods();
+                  },
+                  text: 'Order Now',
+                  textStyle: AppTextStyleHelper.font26WhiteBold,
+                  color: AppColorHelper.primaryColor,
+              );
+            },
+            listener: (context,state) {
+              if(state is GetPaymentMethodsSuccess){
+                Navigator.pushNamed(context, AppRoutingConstants.paymentMethods, arguments: state.methods);
+              }
+            },
           ),
         ],
       ),

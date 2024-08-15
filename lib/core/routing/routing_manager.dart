@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
+import 'package:marketos/features/cart/domain/entities/payment_method_entity.dart';
+import 'package:marketos/features/cart/ui/payment_methods_view.dart';
 import 'package:marketos/features/home/data/models/view_all_model.dart';
 import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
 import 'package:marketos/features/home/logic/cubits/add_to_cart_cubit/add_to_cart_cubit.dart';
@@ -65,6 +67,15 @@ class AppRoutingManager {
             ),
           ),
         );
+
+      case AppRoutingConstants.paymentMethods:
+        var args = settings.arguments as List<PaymentMethodEntity>;
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return PaymentMethodsView(
+            methods: args,
+          );
+        });
+
       case AppRoutingConstants.map:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(

@@ -1,3 +1,5 @@
+import 'package:marketos/core/networking/firebase/models/user_cart_model.dart';
+
 class UserModel{
   final String id;
   final String email;
@@ -6,8 +8,9 @@ class UserModel{
   final List<dynamic> cart;
   final List<dynamic> favourites;
   final dynamic address;
+  final UserCart userCart;
 
-  UserModel( {required this.id, required this.email, required this.name, required this.imageUrl,required this.cart,required this.favourites, required this.address});
+  UserModel( {required this.id, required this.email, required this.name, required this.imageUrl,required this.cart,required this.favourites, required this.address,required this.userCart});
 
   factory UserModel.fromMap(Map<String, dynamic> json){
     return UserModel(
@@ -17,8 +20,8 @@ class UserModel{
       imageUrl: json['imageUrl'],
       cart: json['cart'],
       favourites: json['favourites'],
-      address: json['address']
-
+      address: json['address'],
+      userCart: UserCart.fromMap(json['userCart'])
     );
   }
 
@@ -30,7 +33,8 @@ class UserModel{
       'imageUrl': imageUrl,
       'cart': cart,
       'favourites': favourites,
-      'address': address
+      'address': address,
+      'userCart': userCart.toMap()
     };
   }
 }

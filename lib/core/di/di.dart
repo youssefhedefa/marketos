@@ -6,6 +6,7 @@ import 'package:marketos/features/cart/data/apis/cart_api_services.dart';
 import 'package:marketos/features/cart/data/repo_imple/repo_imple.dart';
 import 'package:marketos/features/cart/domain/repo/cart_repo.dart';
 import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_cubit.dart';
+import 'package:marketos/features/cart/logic/cubits/order_now_cubit/order_now_cubit.dart';
 import 'package:marketos/features/home/data/apis/home_api_service.dart';
 import 'package:marketos/features/home/data/repos_imple/home_repo_imple.dart';
 import 'package:marketos/features/home/domain/repos/home_repo.dart';
@@ -80,4 +81,7 @@ void setupDependencyInjection() async {
   getIt.registerLazySingleton<RemoveFromCartUseCase>(() => RemoveFromCartUseCase(homeRepo: getIt<HomeRepo>()));
   getIt.registerFactory<RemoveFromCartCubit>(() => RemoveFromCartCubit(useCase: getIt<RemoveFromCartUseCase>()));
   getIt.registerFactory<CheckProductCubit>(() => CheckProductCubit(homeRepo: getIt<HomeRepo>()));
+
+  getIt.registerFactory<OrderNowCubit>(() => OrderNowCubit());
+
 }

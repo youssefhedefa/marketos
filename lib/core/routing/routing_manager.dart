@@ -42,23 +42,39 @@ class AppRoutingManager {
         return MaterialPageRoute(builder: (_) => const Land());
       case AppRoutingConstants.viewAll:
         var args = settings.arguments as ViewAllModel;
-        return MaterialPageRoute(builder: (_) => ViewAllView(viewAllModel: args,));
+        return MaterialPageRoute(
+            builder: (_) => ViewAllView(
+                  viewAllModel: args,
+                ));
       case AppRoutingConstants.productDetails:
         var args = settings.arguments as HomeProductEntity;
-        return MaterialPageRoute(builder: (_) => MultiBlocProvider(
-          providers: [
-            BlocProvider(create:(context)=> getIt<CheckProductCubit>()..checkProduct(productId: args.productID)),
-            BlocProvider(create: (context)=> getIt<AddToCartCubit>()),
-            BlocProvider(create: (context)=> getIt<RemoveFromCartCubit>()),
-          ],
-            child: ProductDetailsView(product: args,),),);
-        case AppRoutingConstants.map:
-        return MaterialPageRoute(builder: (_) => MultiBlocProvider(
-          providers: [
-            BlocProvider(create:(context)=> getIt<ChangeAddressCubit>()),
-            BlocProvider(create: (context)=> getIt<GetProfileCubit>()),
-          ],
-            child: const MapView(),),);
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => getIt<CheckProductCubit>()
+                  ..checkProduct(
+                    productId: args.productID,
+                  ),
+              ),
+              BlocProvider(create: (context) => getIt<AddToCartCubit>()),
+              BlocProvider(create: (context) => getIt<RemoveFromCartCubit>()),
+            ],
+            child: ProductDetailsView(
+              product: args,
+            ),
+          ),
+        );
+      case AppRoutingConstants.map:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (context) => getIt<ChangeAddressCubit>()),
+              BlocProvider(create: (context) => getIt<GetProfileCubit>()),
+            ],
+            child: const MapView(),
+          ),
+        );
       default:
         return null;
     }

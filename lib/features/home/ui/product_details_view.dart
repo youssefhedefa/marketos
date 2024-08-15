@@ -14,6 +14,12 @@ class ProductDetailsView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColorHelper.darkWhiteColor,
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context,true);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.all(24.0),

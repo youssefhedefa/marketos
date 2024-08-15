@@ -7,6 +7,7 @@ import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
 import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_cubit.dart';
+import 'package:marketos/features/cart/logic/cubits/order_now_cubit/order_now_cubit.dart';
 import 'package:marketos/features/cart/ui/cart_view.dart';
 import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categories_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
@@ -102,7 +103,8 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
       MultiBlocProvider(
         providers: [
         BlocProvider(create: (context) => getIt<GetCartCubit>()),
-      ],
+          BlocProvider(create: (context) => getIt<OrderNowCubit>()),
+        ],
           child: const CartView(),
       ),
       const Scaffold(),
@@ -198,7 +200,7 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                           heightWhenDrawerOpened: 20.h,
                         ),
                       ),
-                      views[currentViewIndex],
+                      Expanded(child: views[currentViewIndex]),
                     ],
                   ),
                 ),

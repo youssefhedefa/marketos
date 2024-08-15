@@ -19,7 +19,8 @@ class Item extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 180.h,
+      height: 150.h,
+      //height: 180.h,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -80,35 +81,35 @@ class _CounterState extends State<Counter> {
           '\$$totalPrice',
           style: AppTextStyleHelper.font22PurpleBold,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  if(counter > 1){
-                    counter--;
-                  }
-                  totalPrice = counter * double.parse(widget.productPrice);
-                });
-              },
-              icon: const Icon(Icons.remove),
-            ),
-            Text(
-              '$counter',
-              style: AppTextStyleHelper.font22BlackMedium,
-            ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  counter++;
-                  totalPrice = counter * double.parse(widget.productPrice);
-                });
-              },
-              icon: const Icon(Icons.add),
-            ),
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     IconButton(
+        //       onPressed: () {
+        //         setState(() {
+        //           if(counter > 1){
+        //             counter--;
+        //           }
+        //           totalPrice = counter * double.parse(widget.productPrice);
+        //         });
+        //       },
+        //       icon: const Icon(Icons.remove),
+        //     ),
+        //     Text(
+        //       '$counter',
+        //       style: AppTextStyleHelper.font22BlackMedium,
+        //     ),
+        //     IconButton(
+        //       onPressed: () {
+        //         setState(() {
+        //           counter++;
+        //           totalPrice = counter * double.parse(widget.productPrice);
+        //         });
+        //       },
+        //       icon: const Icon(Icons.add),
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }

@@ -13,7 +13,7 @@ class GetCartCubit extends Cubit<GetCartState> {
     final result = await cartRepo.getCartProducts();
     result.fold(
       (failure) => emit(GetCartError(message: failure.message)),
-      (cartProducts) => emit(GetCartSuccess(cartProducts: cartProducts))
+      (cartProducts) => emit(GetCartSuccess(cart: cartProducts))
     );
   }
 

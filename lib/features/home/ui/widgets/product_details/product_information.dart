@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketos/core/components/custom_button.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
+import 'package:marketos/core/networking/firebase/models/cart_product_details_model.dart';
 import 'package:marketos/features/home/logic/cubits/add_to_cart_cubit/add_to_cart_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/add_to_cart_cubit/add_to_cart_states.dart';
 import 'package:marketos/features/home/logic/cubits/check_product_cubit/check_product_cubit.dart';
@@ -101,7 +102,8 @@ class ProductInformation extends StatelessWidget {
                             builder: (context) {
                               return const Center(
                                   child: CircularProgressIndicator());
-                            });
+                            },
+                        );
                       }
                       if (state is RemoveFromCartErrorState) {
                         Navigator.pop(context);
@@ -120,7 +122,9 @@ class ProductInformation extends StatelessWidget {
                         onTap: () {
                           context
                               .read<AddToCartCubit>()
-                              .addToCart(productId: id);
+                              .addToCart(product:
+                                  ProductInCartDetails(id: id, quantity: 1, price: price)
+                          );
                         },
                         text: 'Add to Cart',
                         textStyle: AppTextStyleHelper.font26WhiteBold,

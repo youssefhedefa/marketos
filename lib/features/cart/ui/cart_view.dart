@@ -22,8 +22,6 @@ class _CartViewState extends State<CartView> {
 
   @override
   Widget build(BuildContext context) {
-   // return const EmptyCart();
-   // return const ListOfItems();
     return BlocBuilder<GetCartCubit, GetCartState>(
       builder: (context, state) {
         if (state is GetCartLoading) {

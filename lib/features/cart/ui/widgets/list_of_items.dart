@@ -51,12 +51,14 @@ class ListOfItems extends StatelessWidget {
             separatorBuilder: (context, index) {
               return const SizedBox(height: 20);
             },
-          ),const SizedBox(height: 20),
+          ),
+          SizedBox(height: cartProducts.length <=2 ? 190.h : 20.h),
           CustomButton(
               onTap: () {},
               text: 'Order Now',
               textStyle: AppTextStyleHelper.font26WhiteBold,
-              color: AppColorHelper.primaryColor),
+              color: AppColorHelper.primaryColor,
+          ),
         ],
       ),
     );

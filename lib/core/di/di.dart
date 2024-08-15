@@ -44,9 +44,8 @@ void setupDependencyInjection() async {
   getIt.registerLazySingleton<LogInUseCase>(() => LogInUseCase(registrationRepo: getIt<RegistrationRepoImple>()));
   getIt.registerLazySingleton<SignInUseCase>(() => SignInUseCase(registrationRepo: getIt<RegistrationRepoImple>()));
 
-
-  getIt.registerLazySingleton<SignInCubit>(() => SignInCubit(signInUseCase: getIt<SignInUseCase>()));
-  getIt.registerLazySingleton<LogInCubit>(() => LogInCubit(logInUseCase: getIt<LogInUseCase>()));
+  getIt.registerFactory<SignInCubit>(() => SignInCubit(signInUseCase: getIt<SignInUseCase>()));
+  getIt.registerFactory<LogInCubit>(() => LogInCubit(logInUseCase: getIt<LogInUseCase>()));
 
   getIt.registerLazySingleton<HomeApiService>(() => HomeApiService(dio));
 
@@ -54,31 +53,31 @@ void setupDependencyInjection() async {
 
   getIt.registerLazySingleton<HomeRepo>(() => HomeRepoImple(homeApiService: getIt<HomeApiService>(), appFireBaseHelper: getIt<AppFireBaseHelper>()));
   getIt.registerLazySingleton<GetProductsByCategoryUseCase>(() => GetProductsByCategoryUseCase(homeRepo: getIt<HomeRepo>()));
-  getIt.registerLazySingleton<GetCategoriesCubit>(() => GetCategoriesCubit(homeRepo: getIt<HomeRepo>()));
-  getIt.registerLazySingleton<GetProductByCategoryCubit>(() => GetProductByCategoryCubit(useCase: getIt<GetProductsByCategoryUseCase>()));
+  getIt.registerFactory<GetCategoriesCubit>(() => GetCategoriesCubit(homeRepo: getIt<HomeRepo>()));
+  getIt.registerFactory<GetProductByCategoryCubit>(() => GetProductByCategoryCubit(useCase: getIt<GetProductsByCategoryUseCase>()));
 
   // profile
 
   getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepoImple(appFireBaseHelper: getIt<AppFireBaseHelper>()));
-  getIt.registerLazySingleton<GetProfileCubit>(() => GetProfileCubit(repo: getIt<ProfileRepo>()));
+  getIt.registerFactory<GetProfileCubit>(() => GetProfileCubit(repo: getIt<ProfileRepo>()));
 
   getIt.registerLazySingleton<ChangeNameUseCase>(() => ChangeNameUseCase(profileRepo: getIt<ProfileRepo>()));
-  getIt.registerLazySingleton<ChangeNameCubit>(() => ChangeNameCubit(useCase: getIt<ChangeNameUseCase>()));
+  getIt.registerFactory<ChangeNameCubit>(() => ChangeNameCubit(useCase: getIt<ChangeNameUseCase>()));
 
   getIt.registerLazySingleton<ChangeImageUseCase>(() => ChangeImageUseCase(profileRepo: getIt<ProfileRepo>()));
-  getIt.registerLazySingleton<ChangeImageCubit>(() => ChangeImageCubit(useCase: getIt<ChangeImageUseCase>()));
+  getIt.registerFactory<ChangeImageCubit>(() => ChangeImageCubit(useCase: getIt<ChangeImageUseCase>()));
 
   getIt.registerLazySingleton<ChangeAddressUseCase>(() => ChangeAddressUseCase(profileRepo: getIt<ProfileRepo>()));
-  getIt.registerLazySingleton<ChangeAddressCubit>(() => ChangeAddressCubit(useCase: getIt<ChangeAddressUseCase>()));
+  getIt.registerFactory<ChangeAddressCubit>(() => ChangeAddressCubit(useCase: getIt<ChangeAddressUseCase>()));
 
   // cart
   getIt.registerLazySingleton<CartApiService>(() => CartApiService(dio));
   getIt.registerLazySingleton<CartRepo>(() => CartRepoImple(appFireBaseHelper: getIt<AppFireBaseHelper>(), cartApiService: getIt<CartApiService>()));
-  getIt.registerLazySingleton<GetCartCubit>(() => GetCartCubit(cartRepo: getIt<CartRepo>()));
+  getIt.registerFactory<GetCartCubit>(() => GetCartCubit(cartRepo: getIt<CartRepo>()));
 
   getIt.registerLazySingleton<AddToCartUseCase>(() => AddToCartUseCase(homeRepo: getIt<HomeRepo>()));
-  getIt.registerLazySingleton<AddToCartCubit>(() => AddToCartCubit(useCase: getIt<AddToCartUseCase>()));
+  getIt.registerFactory<AddToCartCubit>(() => AddToCartCubit(useCase: getIt<AddToCartUseCase>()));
   getIt.registerLazySingleton<RemoveFromCartUseCase>(() => RemoveFromCartUseCase(homeRepo: getIt<HomeRepo>()));
-  getIt.registerLazySingleton<RemoveFromCartCubit>(() => RemoveFromCartCubit(useCase: getIt<RemoveFromCartUseCase>()));
-  getIt.registerLazySingleton<CheckProductCubit>(() => CheckProductCubit(homeRepo: getIt<HomeRepo>()));
+  getIt.registerFactory<RemoveFromCartCubit>(() => RemoveFromCartCubit(useCase: getIt<RemoveFromCartUseCase>()));
+  getIt.registerFactory<CheckProductCubit>(() => CheckProductCubit(homeRepo: getIt<HomeRepo>()));
 }

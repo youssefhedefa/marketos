@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marketos/features/cart/logic/cubits/delete_all_products_from_cart/delete_all_products_from_cart_cubit.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MasterCardView extends StatefulWidget {
@@ -36,8 +38,7 @@ class _MasterCardViewState extends State<MasterCardView> {
                   content: Text('Payment Success'),
                 ),
               );
-              Navigator.pop(context);
-              Navigator.pop(context);
+             context.read<DeleteAllProductsFromCartCubit>().deleteAllProductsFromCart().then((value) => Navigator.pop(context,true));
             }
             if(request.url.contains('fail')){
               ScaffoldMessenger.of(context).showSnackBar(

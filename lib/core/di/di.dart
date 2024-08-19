@@ -7,6 +7,7 @@ import 'package:marketos/features/cart/data/apis/payment/payment_api_services.da
 import 'package:marketos/features/cart/data/repo_imple/repo_imple.dart';
 import 'package:marketos/features/cart/domain/repo/cart_repo.dart';
 import 'package:marketos/features/cart/domain/use_case/order_use_case.dart';
+import 'package:marketos/features/cart/logic/cubits/delete_all_products_from_cart/delete_all_products_from_cart_cubit.dart';
 import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_cubit.dart';
 import 'package:marketos/features/cart/logic/cubits/get_payment_methods_cubit/get_payment_methods_cubit.dart';
 import 'package:marketos/features/cart/logic/cubits/order_cubit/order_cubit.dart';
@@ -120,4 +121,7 @@ void setupDependencyInjection() async {
 
   getIt.registerFactory<OrderCubit>(
       () => OrderCubit(useCase: getIt<OrderUseCase>()));
+
+  getIt.registerFactory<DeleteAllProductsFromCartCubit>(
+      () => DeleteAllProductsFromCartCubit(cartRepo: getIt<CartRepo>()));
 }

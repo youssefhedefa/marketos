@@ -27,7 +27,6 @@ class PaymentMethodsView extends StatelessWidget {
           name: invoice.methods[index].name,
           imageUrl: invoice.methods[index].image,
           onTap: (){
-            // if(methods[index].id == 2){
               context.read<OrderCubit>()
                 .makeOrder(
                   orderRequestModel: PaymentRequestModel(
@@ -45,12 +44,9 @@ class PaymentMethodsView extends StatelessWidget {
                 );
               context.read<OrderCubit>().stream.listen((state) {
                 if (state is OrderSuccess) {
-                   // print(state.response.data!.paymentData!);
-                   // MasterCardPaymentData data = state.response.data!.paymentData as MasterCardPaymentData;
                    Navigator.pushNamed(context, AppRoutingConstants.masterCardView, arguments: state.response.data!.paymentData!.redirectTo,);
                 }
               });
-            // }
           },
         ),
         separatorBuilder: (context, index) => SizedBox(height: 12.h),

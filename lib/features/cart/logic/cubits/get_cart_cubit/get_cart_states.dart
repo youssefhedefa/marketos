@@ -1,4 +1,4 @@
-import 'package:marketos/features/cart/data/cart_model.dart';
+import 'package:marketos/features/cart/data/models/cart_model.dart';
 
 abstract class GetCartState{}
 

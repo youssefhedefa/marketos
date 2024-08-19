@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/features/cart/domain/entities/invoice_entity.dart';
+import 'package:marketos/features/cart/logic/cubits/delete_all_products_from_cart/delete_all_products_from_cart_cubit.dart';
 import 'package:marketos/features/cart/logic/cubits/order_cubit/order_cubit.dart';
 import 'package:marketos/features/cart/ui/master_card_view.dart';
 import 'package:marketos/features/cart/ui/payment_methods_view.dart';
@@ -85,7 +86,9 @@ class AppRoutingManager {
 
       case AppRoutingConstants.masterCardView:
         var url = settings.arguments as String;
-        return MaterialPageRoute(builder: (_) => MasterCardView(url: url));
+        return MaterialPageRoute(builder: (_) => BlocProvider(
+            create: (context) => getIt<DeleteAllProductsFromCartCubit>(),
+            child: MasterCardView(url: url)));
       case AppRoutingConstants.map:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(

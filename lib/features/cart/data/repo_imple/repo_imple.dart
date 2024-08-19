@@ -3,7 +3,7 @@ import 'package:marketos/core/failure/failure.dart';
 import 'package:marketos/core/networking/firebase/firebase_helper.dart';
 import 'package:marketos/features/cart/data/apis/cart_api_services.dart';
 import 'package:marketos/features/cart/data/apis/payment/payment_api_services.dart';
-import 'package:marketos/features/cart/data/cart_model.dart';
+import 'package:marketos/features/cart/data/models/cart_model.dart';
 import 'package:marketos/features/cart/data/models/payment_request.dart';
 import 'package:marketos/features/cart/data/models/payment_response.dart';
 import 'package:marketos/features/cart/domain/entities/cart_product_entity.dart';
@@ -38,13 +38,17 @@ class CartRepoImple implements CartRepo {
     catch(e){
       return Left(Failure(message: e.toString()));
     }
-
   }
 
   @override
-  Future<Either<Failure, dynamic>> deleteAllProductsFromCart() {
-    // TODO: implement removeFromCart
-    throw UnimplementedError();
+  Future<Either<Failure, dynamic>> deleteAllProductsFromCart() async {
+    try{
+      final result = await appFireBaseHelper.deleteAllProductsFromCart();
+      return Right(result);
+    }
+    catch(e){
+      return Left(Failure(message: e.toString()));
+    }
   }
 
   @override

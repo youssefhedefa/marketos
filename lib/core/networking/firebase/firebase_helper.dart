@@ -159,6 +159,12 @@ class AppFireBaseHelper {
     }
   }
 
+  Future deleteAllProductsFromCart() async {
+    var userCartCollection = getUserCartCollection();
+    var docReference = userCartCollection.doc(firebaseAuth.currentUser!.uid);
+    await docReference.delete();
+  }
+
   Future<void> addNewUser(UserModel user) async {
     var userCollection = getUserCollection();
     var docReference = userCollection.doc(user.id);

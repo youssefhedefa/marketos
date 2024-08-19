@@ -92,7 +92,7 @@ class ListOfItems extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                totalPrice.toString(),
+                totalPrice.toStringAsFixed(2),
                 style: AppTextStyleHelper.font26BlackMedium,
               ),
             ],
@@ -120,9 +120,7 @@ class ListOfItems extends StatelessWidget {
                           quantity: e.quantity.toString(),
                         ))
                     .toList();
-               // late UserModel user;
                 context.read<GetProfileCubit>().getProfile().then((value) {
-
                 });
                 context.read<GetProfileCubit>().stream.listen((profileState) {
                   if (profileState is GetProfileSuccess) {
@@ -136,7 +134,7 @@ class ListOfItems extends StatelessWidget {
                     Navigator.pushNamed(
                       context, AppRoutingConstants.paymentMethods,
                       arguments: invoice,
-                    );
+                    ).then((value) => context.read<GetCartCubit>().getCartProducts());
                     print(' profile state ${profileState.profile.name}');
                   }
                 });

@@ -20,7 +20,6 @@ class Item extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 150.h,
-      //height: 180.h,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,

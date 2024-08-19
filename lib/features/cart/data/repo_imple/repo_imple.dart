@@ -4,6 +4,8 @@ import 'package:marketos/core/networking/firebase/firebase_helper.dart';
 import 'package:marketos/features/cart/data/apis/cart_api_services.dart';
 import 'package:marketos/features/cart/data/apis/payment/payment_api_services.dart';
 import 'package:marketos/features/cart/data/cart_model.dart';
+import 'package:marketos/features/cart/data/models/payment_request.dart';
+import 'package:marketos/features/cart/data/models/payment_response.dart';
 import 'package:marketos/features/cart/domain/entities/cart_product_entity.dart';
 import 'package:marketos/features/cart/domain/entities/payment_method_entity.dart';
 import 'package:marketos/features/cart/domain/repo/cart_repo.dart';
@@ -70,7 +72,23 @@ class CartRepoImple implements CartRepo {
   Future<Either<Failure, List<PaymentMethodEntity>>> getPaymentMethods() async {
     try{
       final result = await paymentApiService.getPaymentMethods();
-      return Right(result.data);
+      List<PaymentMethodEntity> methods = result.data.where((element) => element.redirect == 'true').map((e) => PaymentMethodEntity(
+        id: e.id,
+        name: e.name,
+        image: e.image
+      )).toList();
+      return Right(methods);
+    }
+    catch(e){
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PaymentResponseModel>> order({required PaymentRequestModel request}) async {
+    try{
+      final result = await paymentApiService.requestPayment(paymentRequest: request);
+      return Right(result);
     }
     catch(e){
       return Left(Failure(message: e.toString()));

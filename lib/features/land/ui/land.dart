@@ -86,8 +86,8 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
       ),
       MultiBlocProvider(
         providers: [
-          BlocProvider.value(
-            value: getIt<GetProfileCubit>(),
+          BlocProvider(
+            create:(context)=> getIt<GetProfileCubit>(),
           ),
           BlocProvider(
             create: (context) => getIt<ChangeNameCubit>(),
@@ -104,8 +104,11 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
         providers: [
         BlocProvider(create: (context) => getIt<GetCartCubit>()),
           BlocProvider(create: (context) => getIt<GetPaymentMethodsCubit>()),
+          BlocProvider(create: (context) => getIt<GetProfileCubit>()),
         ],
-          child: const CartView(),
+          child: CartView(
+            isDrawerOpened: isDrawerOpen,
+          ),
       ),
       const Scaffold(),
       const Scaffold(),

@@ -58,7 +58,18 @@ class ProfileRepoImple extends ProfileRepo {
   @override
   Future<Either<Failure, UserModel?>> getProfile() async {
     try{
+      print(appFireBaseHelper.firebaseAuth.currentUser!.uid);
       var result = await appFireBaseHelper.getUser(appFireBaseHelper.firebaseAuth.currentUser!.uid);
+      print('result $result');
+      print(result!.name);
+      print(result.email);
+      print(result.id);
+      print(result.userCart);
+      print(result.favourites);
+      print(result.address);
+      print(result.imageUrl);
+      print(result.cart);
+
       return Right(result);
     }
     catch(e){

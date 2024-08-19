@@ -68,7 +68,7 @@ class ProductInformation extends StatelessWidget {
               BlocBuilder<CheckProductCubit, CheckProductState>(
                   builder: (context, checkProductState) {
                 if (checkProductState is CheckProductErrorState) {
-                  return Text(checkProductState.message);
+                  return Text('Error: ${checkProductState.message}');
                 }
                 if (checkProductState is CheckProductSuccessState) {
                   if (checkProductState.isProductInCart) {

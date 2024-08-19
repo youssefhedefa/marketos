@@ -105,7 +105,7 @@ class _ProfileCardState extends State<ProfileCard> {
             ),
           );
         }
-        else{
+        else if(state is GetProfileLoading){
           return SizedBox(
             height: widget.isDrawerOpened ? 200.h : 250.h,
             child: Container(
@@ -130,6 +130,21 @@ class _ProfileCardState extends State<ProfileCard> {
                   ),
                 ],
               ),
+            ),
+          );
+        }
+        else{
+          return SizedBox(
+            height: widget.isDrawerOpened ? 200.h : 250.h,
+            child: Container(
+              height: widget.isDrawerOpened ? 170.h :  210.h,
+              width: double.infinity,
+              padding: EdgeInsets.all(20.r),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(26.r),
+              ),
+              child: const SizedBox(),
             ),
           );
         }

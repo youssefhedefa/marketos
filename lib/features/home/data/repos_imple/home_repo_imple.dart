@@ -51,8 +51,14 @@ class HomeRepoImple implements HomeRepo {
   Future<Either<Failure, bool>> checkIfProductIsInCart({required int productID}) async {
     try{
       final result = await appFireBaseHelper.getUserCart();
-      if(result!.cartProducts.any((element) => element.id == productID)){
-        return const Right(true);
+      print(result);
+      if(result != null){
+        if(result.cartProducts.any((element) => element.id == productID)){
+          return const Right(true);
+        }
+        else{
+          return const Right(false);
+        }
       }
       else{
         return const Right(false);

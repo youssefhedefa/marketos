@@ -7,4 +7,5 @@ abstract class AppRoutingConstants{
   static const String productDetails = '/productDetails';
   static const String map = '/map';
   static const String paymentMethods = '/paymentMethods';
+  static const String masterCardView = '/masterCardView';
 }

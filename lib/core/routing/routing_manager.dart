@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
-import 'package:marketos/features/cart/domain/entities/payment_method_entity.dart';
+import 'package:marketos/features/cart/domain/entities/invoice_entity.dart';
+import 'package:marketos/features/cart/logic/cubits/order_cubit/order_cubit.dart';
+import 'package:marketos/features/cart/ui/master_card_view.dart';
 import 'package:marketos/features/cart/ui/payment_methods_view.dart';
 import 'package:marketos/features/home/data/models/view_all_model.dart';
 import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
@@ -69,13 +71,21 @@ class AppRoutingManager {
         );
 
       case AppRoutingConstants.paymentMethods:
-        var args = settings.arguments as List<PaymentMethodEntity>;
-        return MaterialPageRoute(builder: (BuildContext context) {
-          return PaymentMethodsView(
-            methods: args,
+        var args = settings.arguments as InvoiceEntity;
+        return MaterialPageRoute(builder: (context) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (context) => getIt<OrderCubit>()),
+            ],
+            child: PaymentMethodsView(
+              invoice: args,
+            ),
           );
         });
 
+      case AppRoutingConstants.masterCardView:
+        var url = settings.arguments as String;
+        return MaterialPageRoute(builder: (_) => MasterCardView(url: url));
       case AppRoutingConstants.map:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(

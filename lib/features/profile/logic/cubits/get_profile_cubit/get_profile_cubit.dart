@@ -7,7 +7,7 @@ class GetProfileCubit extends Cubit<GetProfileState> {
 
   GetProfileCubit({required this.repo}) : super(GetProfileInitial());
 
-  getProfile() async {
+  Future getProfile() async {
     emit(GetProfileLoading());
     final result = await repo.getProfile();
     result.fold(

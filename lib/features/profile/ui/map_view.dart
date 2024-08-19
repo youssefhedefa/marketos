@@ -9,7 +9,6 @@ import 'package:marketos/core/helpers/font_style_helper.dart';
 import 'package:marketos/features/profile/data/map_init/get_current_location.dart';
 import 'package:marketos/features/profile/logic/cubits/change_address_cubit/change_Address_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/change_address_cubit/change_address_states.dart';
-import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_profile_cubit.dart';
 
 class MapView extends StatefulWidget {
   const MapView({super.key});
@@ -101,8 +100,7 @@ class MapViewState extends State<MapView> {
           position: position,
         );
         getLocation ? context.read<ChangeAddressCubit>().changeAddress(address: position) : null;
-        getLocation ? context.read<GetProfileCubit>().getProfile(): null;
-        getLocation ? Navigator.pop(context) : null;
+        getLocation ? Navigator.pop(context,true) : null;
       },
       (error) {
         alertsBuilder(error: error);

@@ -23,18 +23,31 @@ class EditProfileOptionsList extends StatefulWidget {
 }
 
 class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
+
+  late TextEditingController nameController;
+
+  @override
+  void initState() {
+    nameController = TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.zero,
       shrinkWrap: true,
       children: [
-        EditProfileOption(
-          title: 'Change Name',
-          isDrawerOpened: widget.isDrawerOpened,
-          onTap: () {
-            nameBottomSheet();
-          },
+        BlocBuilder<ChangeNameCubit, ChangeNameState>(
+          builder: (context,state) {
+            return EditProfileOption(
+              title: 'Change Name',
+              isDrawerOpened: widget.isDrawerOpened,
+              onTap: () {
+                nameBottomSheet();
+              },
+            );
+          }
         ),
         SizedBox(height: 20.h),
         BlocBuilder<ChangeImageCubit, ChangeImageState>(
@@ -49,13 +62,13 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
           },
         ),
         SizedBox(height: 20.h),
-        BlocProvider.value(
-          value: getIt<ChangeAddressCubit>(),
+        BlocProvider(
+          create: (context)=> getIt<ChangeAddressCubit>(),
           child: EditProfileOption(
             isDrawerOpened: widget.isDrawerOpened,
             title: 'Change Address',
             onTap: () {
-              Navigator.pushNamed(context, AppRoutingConstants.map);
+              Navigator.pushNamed(context, AppRoutingConstants.map).then((value) => context.read<GetProfileCubit>().getProfile());
             },
           ),
         ),
@@ -70,11 +83,11 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
       builder: (newContext) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider.value(
-              value: getIt<ChangeNameCubit>(),
+            BlocProvider(
+              create: (context)=> getIt<ChangeNameCubit>(),
             ),
-            BlocProvider.value(
-              value: getIt<GetProfileCubit>(),
+            BlocProvider(
+              create: (context)=> getIt<GetProfileCubit>(),
             )
           ],
           child: Padding(
@@ -83,7 +96,7 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
               children: [
                 SizedBox(height: 20.h),
                 TextField(
-                  controller: context.read<ChangeNameCubit>().nameController,
+                  controller: nameController,
                   decoration: InputDecoration(
                     hintText: 'Enter your name',
                     border: OutlineInputBorder(
@@ -106,10 +119,8 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
                       text: 'Change Name',
                       onTap: () {
                         context.read<ChangeNameCubit>().changeName(
-                            name: context
-                                .read<ChangeNameCubit>()
-                                .nameController
-                                .text);
+                            name: nameController.text,
+                        );
                       },
                       color: Theme.of(context).primaryColor,
                       textStyle: AppTextStyleHelper.font26WhiteBold,
@@ -119,10 +130,9 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
                     if (state is ChangeNameSuccess) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Name changed successfully')));
-                      context.read<ChangeNameCubit>().nameController.clear();
-                      context.read<GetProfileCubit>().getProfile();
+                      nameController.clear();
                       Navigator.pop(context);
-                      Navigator.pop(context);
+                      Navigator.pop(context,true);
                     }
                     if (state is ChangeNameFailed) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -148,14 +158,14 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
           ),
         );
       },
-    );
+    ).then((value) => context.read<GetProfileCubit>().getProfile());
   }
 
   changeImage() {
     context.read<ChangeImageCubit>().pickImage().then((value) {
       if (value != null) {
-        context.read<ChangeImageCubit>().changeImage(image: value);
-        context.read<GetProfileCubit>().getProfile();
+        context.read<ChangeImageCubit>().changeImage(image: value).then((value) => context.read<GetProfileCubit>().getProfile());
+
       }
     }).catchError((e) {
       ScaffoldMessenger.of(context).showSnackBar(

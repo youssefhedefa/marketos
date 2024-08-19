@@ -147,6 +147,9 @@ class _SignInFormState extends State<SignInForm> {
                 Navigator.pushNamed(context, AppRoutingConstants.logIn);
               },
             ),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),

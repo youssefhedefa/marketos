@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
 import 'package:marketos/features/home/ui/widgets/categories/custom_categories_list.dart';
 import 'package:marketos/features/home/ui/widgets/products/custom_products_list.dart';
@@ -20,9 +21,9 @@ class HomeView extends StatelessWidget {
               ? AppTextStyleHelper.font36BlackBold
               : AppTextStyleHelper.font46BlackBold,
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: isDrawerOpen ? 10.h : 20.h),
         const CustomCategoriesList(),
-        const SizedBox(height: 20),
+        SizedBox(height: isDrawerOpen ? 10.h : 20.h),
         CustomProductsList(
           isDrawerOpen: isDrawerOpen,
         ),

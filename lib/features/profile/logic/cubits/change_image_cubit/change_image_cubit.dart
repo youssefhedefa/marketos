@@ -10,7 +10,7 @@ class ChangeImageCubit extends Cubit<ChangeImageState> {
 
   final ImagePicker _picker = ImagePicker();
 
-  changeImage({required XFile image}) async {
+  Future changeImage({required XFile image}) async {
     emit(ChangeImageLoading());
     var result = await useCase.call(image: image);
     result.fold(

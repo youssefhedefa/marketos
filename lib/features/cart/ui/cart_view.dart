@@ -6,14 +6,15 @@ import 'package:marketos/features/cart/ui/widgets/empty_cart.dart';
 import 'package:marketos/features/cart/ui/widgets/list_of_items.dart';
 
 class CartView extends StatefulWidget {
-  const CartView({super.key});
+  const CartView({super.key, required this.isDrawerOpened});
+
+  final bool isDrawerOpened;
 
   @override
   State<CartView> createState() => _CartViewState();
 }
 
-class _CartViewState extends State<CartView>  {
-
+class _CartViewState extends State<CartView> {
   @override
   void initState() {
     super.initState();
@@ -28,11 +29,14 @@ class _CartViewState extends State<CartView>  {
         if (state is GetCartLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is GetCartSuccess) {
-
-          if(state.cart.cartProducts.isEmpty){
+          if (state.cart.cartProducts.isEmpty) {
             return const Center(child: EmptyCart());
-          }else{
-            return ListOfItems(cartProducts: state.cart.cartProducts, totalPrice: state.cart.totalPrice);
+          } else {
+            return ListOfItems(
+              cartProducts: state.cart.cartProducts,
+              totalPrice: state.cart.totalPrice,
+              isDrawerOpened: widget.isDrawerOpened,
+            );
           }
         } else if (state is GetCartError) {
           return Center(child: Text(state.message));
@@ -43,6 +47,3 @@ class _CartViewState extends State<CartView>  {
     );
   }
 }
-
-
-

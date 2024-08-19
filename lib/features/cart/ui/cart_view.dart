@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marketos/core/helpers/image_assets_helper.dart';
 import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_cubit.dart';
 import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_states.dart';
-import 'package:marketos/features/cart/ui/widgets/empty_cart.dart';
+import 'package:marketos/core/components/empty_screen.dart';
 import 'package:marketos/features/cart/ui/widgets/list_of_items.dart';
 
 class CartView extends StatefulWidget {
@@ -30,7 +31,12 @@ class _CartViewState extends State<CartView> {
           return const Center(child: CircularProgressIndicator());
         } else if (state is GetCartSuccess) {
           if (state.cart.cartProducts.isEmpty) {
-            return const Center(child: EmptyCart());
+            return const Center(
+              child: EmptyScreen(
+                image: AppImageHelper.emptyCartImage,
+                text: 'cart',
+              ),
+            );
           } else {
             return ListOfItems(
               cartProducts: state.cart.cartProducts,

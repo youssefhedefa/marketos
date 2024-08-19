@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
-import 'package:marketos/core/helpers/image_assets_helper.dart';
 
-class EmptyCart extends StatelessWidget {
-  const EmptyCart({super.key});
+class EmptyScreen extends StatelessWidget {
+  const EmptyScreen({super.key, required this.image, required this.text});
+
+  final String image;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +17,12 @@ class EmptyCart extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              AppImageHelper.emptyCartImage,
+              image,
               width: 350,
               height: 350,
             ),
             Text(
-              'No items in your cart yet!',
+              'No items in your $text yet!',
               style: AppTextStyleHelper.font32BlackBold,
             ),
           ],

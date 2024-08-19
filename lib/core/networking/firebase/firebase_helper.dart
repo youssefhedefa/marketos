@@ -14,10 +14,9 @@ class AppFireBaseHelper {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final String _userCollection = "Users";
   final String _userImageField = "imageUrl";
-  final String _userFavoritesField = "favorites";
+  final String _userFavoritesField = "favourites";
   //final String _userCartField = "cart";
   final String _userAddressField = "address";
-
   final String _userCartCollection = "UserCart";
   final String _userCartProductsField = "ProductDetails";
 
@@ -223,16 +222,16 @@ class AppFireBaseHelper {
   }
 
   Future<String> addToFavorite(
-      {required String userId, required String animeId}) async {
+      {required String userId, required int productId}) async {
     var userCollection = getUserCollection();
     var docReference = userCollection.doc(userId);
     var user = await getUser(userId);
     if (user != null) {
       var favorites = user.favourites;
-      if (favorites.contains(animeId)) {
+      if (favorites.contains(productId)) {
         return "Already in favorites";
       }
-      favorites.add(animeId);
+      favorites.add(productId);
       await docReference.update({_userFavoritesField: favorites});
       return "Added to favorites";
     }

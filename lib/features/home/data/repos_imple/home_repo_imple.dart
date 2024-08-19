@@ -80,4 +80,16 @@ class HomeRepoImple implements HomeRepo {
     }
   }
 
+
+  @override
+  Future<Either<Failure, dynamic>> addToFavorite({required ProductInCartDetails product}) async {
+    try{
+      final result = await appFireBaseHelper.addToFavorite(userId: appFireBaseHelper.firebaseAuth.currentUser!.uid, productId: product.id);
+      return Right(result);
+    }
+    catch(e){
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
 }

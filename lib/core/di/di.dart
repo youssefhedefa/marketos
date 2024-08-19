@@ -18,9 +18,11 @@ import 'package:marketos/features/home/data/apis/home_api_service.dart';
 import 'package:marketos/features/home/data/repos_imple/home_repo_imple.dart';
 import 'package:marketos/features/home/domain/repos/home_repo.dart';
 import 'package:marketos/features/home/domain/use_cases/add_to_cart_use_case.dart';
+import 'package:marketos/features/home/domain/use_cases/add_to_favorite_use_case.dart';
 import 'package:marketos/features/home/domain/use_cases/get_products_by_category_use_case.dart';
 import 'package:marketos/features/home/domain/use_cases/remove_from_cart_use_case.dart';
 import 'package:marketos/features/home/logic/cubits/add_to_cart_cubit/add_to_cart_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/add_to_favorite_cubit/add_to_favorite_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/check_product_cubit/check_product_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categories_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
@@ -138,5 +140,11 @@ void setupDependencyInjection() async {
 
   getIt.registerFactory<GetFavoriteCubit>(
       () => GetFavoriteCubit(repo: getIt<FavoriteRepo>()));
+
+  getIt.registerLazySingleton<AddToFavoriteUseCase>(
+      () => AddToFavoriteUseCase(homeRepo: getIt<HomeRepo>()));
+
+  getIt.registerFactory<AddToFavoriteCubit>(
+      () => AddToFavoriteCubit(useCase: getIt<AddToFavoriteUseCase>()));
 
 }

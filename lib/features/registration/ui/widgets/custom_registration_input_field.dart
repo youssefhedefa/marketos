@@ -52,7 +52,7 @@ class CustomRegistrationInputField extends StatelessWidget {
                 ? GestureDetector(
                     onTap: onTap,
                     child: Text(
-                      'show',
+                      showPassword ? 'show' : 'hide',
                       style: AppTextStyleHelper.font22PurpleBold,
                     ),
                   )

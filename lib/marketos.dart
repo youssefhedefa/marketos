@@ -23,7 +23,7 @@ class Marketos extends StatelessWidget {
           useMaterial3: true,
         ),
         onGenerateRoute: appRoutingManager.onGenerateRoute,
-        initialRoute: AppRoutingConstants.signIn,
+        initialRoute: AppRoutingConstants.splash,
         // home:const Land(),
         // home:const ProductDetailsView(),
       ),

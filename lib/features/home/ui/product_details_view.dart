@@ -35,10 +35,10 @@ class ProductDetailsView extends StatelessWidget {
                     ),
                   );
             },
-            icon: SizedBox(
+            icon: const SizedBox(
                 width: 40,
                 height: 40,
-                child: const Icon(Icons.favorite_border)),
+                child: Icon(Icons.favorite_border)),
           ),
         ],
         backgroundColor: AppColorHelper.darkWhiteColor,

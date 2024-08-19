@@ -12,7 +12,7 @@ import 'package:marketos/features/cart/domain/repo/cart_repo.dart';
 
 class CartRepoImple implements CartRepo {
   final AppFireBaseHelper appFireBaseHelper;
-  final CartApiService cartApiService;
+  final CartOrFavoriteApiService cartApiService;
   final PaymentApiService paymentApiService;
 
   CartRepoImple({required this.appFireBaseHelper,required this.cartApiService,required this.paymentApiService});
@@ -21,7 +21,7 @@ class CartRepoImple implements CartRepo {
   Future<Either<Failure, CartModel>> getCartProducts() async {
     try{
       final result = await appFireBaseHelper.getUserCart();
-      List<CartProductEntity> products = [];
+      List<CartOrFavoriteProductEntity> products = [];
       for(var i in result?.cartProducts ?? []){
         final result = await getSingleProduct(productID: i.id);
         result.fold(
@@ -52,12 +52,12 @@ class CartRepoImple implements CartRepo {
   }
 
   @override
-  Future<Either<Failure, CartProductEntity>> getSingleProduct({required int productID}) async {
+  Future<Either<Failure, CartOrFavoriteProductEntity>> getSingleProduct({required int productID}) async {
     try{
       final result = await cartApiService.getSingleProduct(
         id: productID,
       );
-      CartProductEntity product = CartProductEntity(
+      CartOrFavoriteProductEntity product = CartOrFavoriteProductEntity(
         id: result.id,
         name: result.name,
         price: result.productPrice,

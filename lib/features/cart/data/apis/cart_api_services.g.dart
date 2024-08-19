@@ -8,7 +8,7 @@ part of 'cart_api_services.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _CartApiService implements CartApiService {
+class _CartApiService implements CartOrFavoriteApiService {
   _CartApiService(
     this._dio, {
     this.baseUrl,

@@ -9,7 +9,7 @@ import 'package:marketos/features/cart/domain/entities/payment_method_entity.dar
 abstract class CartRepo {
   Future<Either<Failure,dynamic>> deleteAllProductsFromCart();
   Future<Either<Failure,CartModel>> getCartProducts();
-  Future<Either<Failure, CartProductEntity>> getSingleProduct({required int productID});
+  Future<Either<Failure, CartOrFavoriteProductEntity>> getSingleProduct({required int productID});
   Future<Either<Failure, List<PaymentMethodEntity>>> getPaymentMethods();
   Future<Either<Failure, PaymentResponseModel>> order({required PaymentRequestModel request});
 

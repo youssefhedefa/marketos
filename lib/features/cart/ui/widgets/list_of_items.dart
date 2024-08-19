@@ -21,7 +21,7 @@ class ListOfItems extends StatelessWidget {
   const ListOfItems(
       {super.key, required this.cartProducts, required this.totalPrice, required this.isDrawerOpened,});
 
-  final List<CartProductEntity> cartProducts;
+  final List<CartOrFavoriteProductEntity> cartProducts;
   final num totalPrice;
   final bool isDrawerOpened;
 
@@ -36,7 +36,6 @@ class ListOfItems extends StatelessWidget {
               itemCount: cartProducts.length,
               padding: EdgeInsets.zero,
               shrinkWrap: true,
-              //physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {

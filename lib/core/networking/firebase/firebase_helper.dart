@@ -15,7 +15,7 @@ class AppFireBaseHelper {
   final String _userCollection = "Users";
   final String _userImageField = "imageUrl";
   final String _userFavoritesField = "favorites";
-  final String _userCartField = "cart";
+  //final String _userCartField = "cart";
   final String _userAddressField = "address";
 
   final String _userCartCollection = "UserCart";
@@ -239,54 +239,54 @@ class AppFireBaseHelper {
     return "User not found";
   }
 
-  Future<void> removeFromFavorite(
-      {required String userId, required String animeId}) async {
-    var userCollection = getUserCollection();
-    var docReference = userCollection.doc(userId);
-    var user = await getUser(userId);
-    if (user != null) {
-      var favorites = user.favourites;
-      favorites.remove(animeId);
-      await docReference.update({_userFavoritesField: favorites});
-    }
-  }
+  // Future<void> removeFromFavorite(
+  //     {required String userId, required String animeId}) async {
+  //   var userCollection = getUserCollection();
+  //   var docReference = userCollection.doc(userId);
+  //   var user = await getUser(userId);
+  //   if (user != null) {
+  //     var favorites = user.favourites;
+  //     favorites.remove(animeId);
+  //     await docReference.update({_userFavoritesField: favorites});
+  //   }
+  // }
 
-  Future<String> addToCart(
-      {required String userId, required String productId}) async {
-    var userCollection = getUserCollection();
-    var docReference = userCollection.doc(userId);
-    var user = await getUser(userId);
-    if (user != null) {
-      var watchList = user.cart;
-      if (watchList.contains(productId)) {
-        return cartStates[CartStates.alreadyInWatchList]!;
-      }
-      watchList.add(productId);
-      await docReference.update({_userCartField: watchList});
-      return cartStates[CartStates.addedToWatchList]!;
-    }
-    return cartStates[CartStates.error]!;
-  }
+  // Future<String> addToCart(
+  //     {required String userId, required String productId}) async {
+  //   var userCollection = getUserCollection();
+  //   var docReference = userCollection.doc(userId);
+  //   var user = await getUser(userId);
+  //   if (user != null) {
+  //     var watchList = user.cart;
+  //     if (watchList.contains(productId)) {
+  //       return cartStates[CartStates.alreadyInWatchList]!;
+  //     }
+  //     watchList.add(productId);
+  //     await docReference.update({_userCartField: watchList});
+  //     return cartStates[CartStates.addedToWatchList]!;
+  //   }
+  //   return cartStates[CartStates.error]!;
+  // }
 
-  Future<void> removeFromCart(
-      {required String userId, required String productId}) async {
-    var userCollection = getUserCollection();
-    var docReference = userCollection.doc(userId);
-    var user = await getUser(userId);
-    if (user != null) {
-      var watchList = user.cart;
-      watchList.remove(productId);
-      await docReference.update({_userCartField: watchList});
-    }
-  }
+  // Future<void> removeFromCart(
+  //     {required String userId, required String productId}) async {
+  //   var userCollection = getUserCollection();
+  //   var docReference = userCollection.doc(userId);
+  //   var user = await getUser(userId);
+  //   if (user != null) {
+  //     var watchList = user.cart;
+  //     watchList.remove(productId);
+  //     await docReference.update({_userCartField: watchList});
+  //   }
+  // }
 
-  Future<List<dynamic>> getCart({required String userId}) async {
-    var user = await getUser(userId);
-    if (user != null) {
-      return user.cart;
-    }
-    return [];
-  }
+  // Future<List<dynamic>> getCart({required String userId}) async {
+  //   var user = await getUser(userId);
+  //   if (user != null) {
+  //     return user.cart;
+  //   }
+  //   return [];
+  // }
 
   Future<void> signOut() async {
     await firebaseAuth.signOut();

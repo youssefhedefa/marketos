@@ -11,6 +11,9 @@ import 'package:marketos/features/cart/logic/cubits/delete_all_products_from_car
 import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_cubit.dart';
 import 'package:marketos/features/cart/logic/cubits/get_payment_methods_cubit/get_payment_methods_cubit.dart';
 import 'package:marketos/features/cart/logic/cubits/order_cubit/order_cubit.dart';
+import 'package:marketos/features/favorite/data/repo_imple/favorite_repo_imple.dart';
+import 'package:marketos/features/favorite/domain/repo/favorite_repo.dart';
+import 'package:marketos/features/favorite/logic/get_favorite_cubit/get_favorite_cubit.dart';
 import 'package:marketos/features/home/data/apis/home_api_service.dart';
 import 'package:marketos/features/home/data/repos_imple/home_repo_imple.dart';
 import 'package:marketos/features/home/domain/repos/home_repo.dart';
@@ -94,11 +97,11 @@ void setupDependencyInjection() async {
       () => ChangeAddressCubit(useCase: getIt<ChangeAddressUseCase>()));
 
   // cart
-  getIt.registerLazySingleton<CartApiService>(() => CartApiService(dio));
+  getIt.registerLazySingleton<CartOrFavoriteApiService>(() => CartOrFavoriteApiService(dio));
   getIt.registerLazySingleton<PaymentApiService>(() => PaymentApiService(dio));
   getIt.registerLazySingleton<CartRepo>(() => CartRepoImple(
       appFireBaseHelper: getIt<AppFireBaseHelper>(),
-      cartApiService: getIt<CartApiService>(),
+      cartApiService: getIt<CartOrFavoriteApiService>(),
       paymentApiService: getIt<PaymentApiService>()));
   getIt.registerFactory<GetCartCubit>(
       () => GetCartCubit(cartRepo: getIt<CartRepo>()));
@@ -124,4 +127,16 @@ void setupDependencyInjection() async {
 
   getIt.registerFactory<DeleteAllProductsFromCartCubit>(
       () => DeleteAllProductsFromCartCubit(cartRepo: getIt<CartRepo>()));
+
+
+  // favorite
+
+
+  getIt.registerLazySingleton<FavoriteRepo>(() => FavoriteRepoImple(
+      apiService: getIt<CartOrFavoriteApiService>(),
+      fireBaseHelper: getIt<AppFireBaseHelper>()));
+
+  getIt.registerFactory<GetFavoriteCubit>(
+      () => GetFavoriteCubit(repo: getIt<FavoriteRepo>()));
+
 }

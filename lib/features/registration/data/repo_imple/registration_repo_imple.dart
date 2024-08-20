@@ -18,7 +18,7 @@ class RegistrationRepoImple implements RegistrationRepo {
       var userCredential = await appFireBaseHelper.createUser(email: email, password: password);
       return right(userCredential);
     } on FirebaseAuthException catch (e) {
-      return left(Failure(message: e.code));
+      return left(Failure.fromFirebase(message: e.code));
     }
   }
 
@@ -31,7 +31,7 @@ class RegistrationRepoImple implements RegistrationRepo {
       var userCredential = await appFireBaseHelper.logIn(email: email, password: password);
       return right(userCredential);
     } on FirebaseAuthException catch (e) {
-      return left(Failure(message: e.code));
+      return left(Failure.fromFirebase(message: e.code));
     }
   }
 

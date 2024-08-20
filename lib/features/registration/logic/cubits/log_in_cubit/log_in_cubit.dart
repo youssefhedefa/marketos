@@ -18,9 +18,7 @@ class LogInCubit extends Cubit<LogInStates>{
     var result = await logInUseCase.call(email: email, password: password,);
     result.fold(
             (error) => emit(LogInErrorState(error: Failure(message: error.message))),
-            (userCredential) async{
-          emit(LogInSuccessState());
-        }
+            (userCredential) => emit(LogInSuccessState(),)
     );
   }
 

@@ -20,9 +20,7 @@ class SignInCubit extends Cubit<SignInStates>{
     var result = await signInUseCase.call(email: email, password: password,);
     result.fold(
       (error) => emit(SignInErrorState(error: Failure(message: error.message))),
-      (userCredential) async{
-        emit(SignInSuccessState());
-      }
+      (userCredential) => emit(SignInSuccessState())
     );
   }
 

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:marketos/core/components/custom_search_field.dart';
 import 'package:marketos/core/components/functions/calculate_height.dart';
 import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
-import 'package:marketos/core/helpers/font_style_helper.dart';
-import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_cubit.dart';
 import 'package:marketos/features/cart/logic/cubits/get_payment_methods_cubit/get_payment_methods_cubit.dart';
 import 'package:marketos/features/cart/ui/cart_view.dart';
@@ -20,6 +17,7 @@ import 'package:marketos/features/profile/logic/cubits/change_image_cubit/change
 import 'package:marketos/features/profile/logic/cubits/change_name_cubit/change_name_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_profile_cubit.dart';
 import 'package:marketos/features/profile/ui/profile_view.dart';
+import 'widgets/custom_land_app_bar.dart';
 
 class Land extends StatefulWidget {
   const Land({super.key});
@@ -160,61 +158,22 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: calculateHeight(
-                          isDrawerOpened: isDrawerOpen,
-                          heightWhenDrawerClosed: 70.h,
-                          heightWhenDrawerOpened: 20.h,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              if (isDrawerOpen) {
-                                animationController.reverse();
-                                setState(() {
-                                  isDrawerOpen = !isDrawerOpen;
-                                });
-                              } else {
-                                animationController.forward();
-                                setState(() {
-                                  isDrawerOpen = !isDrawerOpen;
-                                });
-                              }
-                            },
-                            icon: Icon(
-                              isDrawerOpen ? Icons.close : Icons.menu,
-                              size: 34.r,
-                            ),
-                          ),
-                          currentViewIndex == 1
-                              ? Padding(
-                                  padding: const EdgeInsets.only(left: 24.0),
-                                  child: Text(
-                                    'My Profile',
-                                    style: AppTextStyleHelper.font32BlackBold,
-                                  ),
-                                )
-                              : Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        AppRoutingConstants.searchView,
-                                      );
-                                    },
-                                      child: const CustomSearchField(),
-                                  ),
-                                ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: calculateHeight(
-                          isDrawerOpened: isDrawerOpen,
-                          heightWhenDrawerClosed: 24.h,
-                          heightWhenDrawerOpened: 20.h,
-                        ),
+                      CustomLandAppBar(
+                        isDrawerOpen: isDrawerOpen,
+                        currentViewIndex: currentViewIndex,
+                        onPressed: () {
+                          if (isDrawerOpen) {
+                            animationController.reverse();
+                            setState(() {
+                              isDrawerOpen = !isDrawerOpen;
+                            });
+                          } else {
+                            animationController.forward();
+                            setState(() {
+                              isDrawerOpen = !isDrawerOpen;
+                            });
+                          }
+                        },
                       ),
                       Expanded(child: views[currentViewIndex]),
                     ],
@@ -228,3 +187,5 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
     );
   }
 }
+
+

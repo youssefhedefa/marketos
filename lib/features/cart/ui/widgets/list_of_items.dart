@@ -18,8 +18,12 @@ import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_pro
 import 'package:marketos/features/registration/data/model/user_model.dart';
 
 class ListOfItems extends StatelessWidget {
-  const ListOfItems(
-      {super.key, required this.cartProducts, required this.totalPrice, required this.isDrawerOpened,});
+  const ListOfItems({
+    super.key,
+    required this.cartProducts,
+    required this.totalPrice,
+    required this.isDrawerOpened,
+  });
 
   final List<CartOrFavoriteProductEntity> cartProducts;
   final num totalPrice;
@@ -32,57 +36,45 @@ class ListOfItems extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: isDrawerOpened ? const SizedBox() : ListView.separated(
-              itemCount: cartProducts.length,
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    HomeProductEntity product = HomeProductEntity(
-                      productID: cartProducts[index].id,
-                      name: cartProducts[index].name,
-                      productPrice: cartProducts[index].price,
-                      image: cartProducts[index].image,
-                      otherImages: cartProducts[index].images,
-                      productDescription: cartProducts[index].description,
-                      productCategory: '',
-                    );
-                    Navigator.pushNamed(
-                      context,
-                      AppRoutingConstants.productDetails,
-                      arguments: product,
-                    ).then((value) {
-                      context.read<GetCartCubit>().getCartProducts();
-                      return null;
-                    });
-                  },
-                  child: Item(
-                    productName: cartProducts[index].name,
-                    productPrice: cartProducts[index].price.toString(),
-                    image: cartProducts[index].image,
-                    quantity: cartProducts[index].quantity,
+            child: isDrawerOpened
+                ? const SizedBox()
+                : ListView.separated(
+                    itemCount: cartProducts.length,
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          onItemTaped(index: index,context: context);
+                        },
+                        child: Item(
+                          productName: cartProducts[index].name,
+                          productPrice: cartProducts[index].price.toString(),
+                          image: cartProducts[index].image,
+                          quantity: cartProducts[index].quantity,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 20);
+                    },
                   ),
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 20);
-              },
-            ),
           ),
-          isDrawerOpened ? SizedBox(
-            height: cartProducts.length <= 2
-                ? cartProducts.length == 1
-                ? 350.h
-                : 100.h
-                : 12.h,
-          ) : SizedBox(
-              height: cartProducts.length <= 2
-                  ? cartProducts.length == 1
-                      ? 380.h
-                      : 190.h
-                  : 20.h,
-          ),
+          isDrawerOpened
+              ? SizedBox(
+                  height: cartProducts.length <= 2
+                      ? cartProducts.length == 1
+                          ? 350.h
+                          : 100.h
+                      : 12.h,
+                )
+              : SizedBox(
+                  height: cartProducts.length <= 2
+                      ? cartProducts.length == 1
+                          ? 380.h
+                          : 190.h
+                      : 20.h,
+                ),
           Row(
             children: [
               Text(
@@ -119,27 +111,29 @@ class ListOfItems extends StatelessWidget {
                           quantity: e.quantity.toString(),
                         ))
                     .toList();
-                context.read<GetProfileCubit>().getProfile().then((value) {
-                });
-                context.read<GetProfileCubit>().stream.listen((profileState) {
-                  if (profileState is GetProfileSuccess) {
-                    UserModel user = (context.read<GetProfileCubit>().state as GetProfileSuccess).profile;
-                    InvoiceEntity invoice = InvoiceEntity(
-                      products: products,
-                      totalPrice: totalPrice,
-                      user: user,
-                      methods: state.methods,
-                    );
-                    Navigator.pushNamed(
-                      context, AppRoutingConstants.paymentMethods,
-                      arguments: invoice,
-                    ).then((value) => context.read<GetCartCubit>().getCartProducts());
-                    print(' profile state ${profileState.profile.name}');
-                  }
-                });
-
-
-
+                context.read<GetProfileCubit>().getProfile().then((value) {});
+                context.read<GetProfileCubit>().stream.listen(
+                  (profileState) {
+                    if (profileState is GetProfileSuccess) {
+                      UserModel user = (context.read<GetProfileCubit>().state
+                              as GetProfileSuccess)
+                          .profile;
+                      InvoiceEntity invoice = InvoiceEntity(
+                        products: products,
+                        totalPrice: totalPrice,
+                        user: user,
+                        methods: state.methods,
+                      );
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutingConstants.paymentMethods,
+                        arguments: invoice,
+                      ).then((value) =>
+                          context.read<GetCartCubit>().getCartProducts());
+                      print(' profile state ${profileState.profile.name}');
+                    }
+                  },
+                );
               }
             },
           ),
@@ -147,4 +141,25 @@ class ListOfItems extends StatelessWidget {
       ),
     );
   }
+
+  onItemTaped({required BuildContext context,required int index}) {
+    HomeProductEntity product = HomeProductEntity(
+      productID: cartProducts[index].id,
+      name: cartProducts[index].name,
+      productPrice: cartProducts[index].price,
+      image: cartProducts[index].image,
+      otherImages: cartProducts[index].images,
+      productDescription: cartProducts[index].description,
+      productCategory: '',
+    );
+    Navigator.pushNamed(
+      context,
+      AppRoutingConstants.productDetails,
+      arguments: product,
+    ).then((value) {
+      context.read<GetCartCubit>().getCartProducts();
+      return null;
+    });
+  }
+
 }

@@ -8,6 +8,10 @@ class SearchCubit extends Cubit<SearchState> {
   SearchCubit({required this.useCase}) : super(SearchInitialState());
 
   void search({required String query}) async {
+    if(query.isEmpty){
+      emit(SearchInitialState());
+      return;
+    }
     emit(SearchLoadingState());
     final response = await useCase.call(query: query);
     response.fold(

@@ -32,11 +32,9 @@ class SearchView extends StatelessWidget {
               }
               if (state is SearchSuccessState) {
                 if (state.products.isEmpty) {
-                  return const SingleChildScrollView(
-                    child: EmptyScreen(
-                        image: AppImageHelper.searchNotFoundImage,
-                        text: 'list'),
-                  );
+                  return const EmptyScreen(
+                      image: AppImageHelper.searchNotFoundImage,
+                      text: 'list');
                 }
                 return Expanded(
                   child: ViewAllBody(
@@ -47,11 +45,9 @@ class SearchView extends StatelessWidget {
                   ),
                 );
               }
-              return const SingleChildScrollView(
-                child: EmptyScreen(
-                    image: AppImageHelper.searchNotFoundImage,
-                    text: 'list'),
-              );
+              return const EmptyScreen(
+                  image: AppImageHelper.searchNotFoundImage,
+                  text: 'list');
             }),
           ],
         ),

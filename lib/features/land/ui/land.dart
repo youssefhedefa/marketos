@@ -6,6 +6,7 @@ import 'package:marketos/core/components/functions/calculate_height.dart';
 import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
+import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/features/cart/logic/cubits/get_cart_cubit/get_cart_cubit.dart';
 import 'package:marketos/features/cart/logic/cubits/get_payment_methods_cubit/get_payment_methods_cubit.dart';
 import 'package:marketos/features/cart/ui/cart_view.dart';
@@ -195,8 +196,16 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
                                     style: AppTextStyleHelper.font32BlackBold,
                                   ),
                                 )
-                              : const Expanded(
-                                  child: CustomSearchField(),
+                              : Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        AppRoutingConstants.searchView,
+                                      );
+                                    },
+                                      child: const CustomSearchField(),
+                                  ),
                                 ),
                         ],
                       ),

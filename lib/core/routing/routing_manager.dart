@@ -26,10 +26,11 @@ import 'package:marketos/features/registration/logic/cubits/log_in_cubit/log_in_
 import 'package:marketos/features/registration/logic/cubits/sign_in_cubit/sign_in_cubit.dart';
 import 'package:marketos/features/registration/ui/forms/log_in_form.dart';
 import 'package:marketos/features/registration/ui/forms/sign_in_form.dart';
+import 'package:marketos/features/search/logic/search_cubit/search_cubit.dart';
+import 'package:marketos/features/search/ui/search_view.dart';
 import 'package:marketos/features/splash/ui/splash_view.dart';
 
 class AppRoutingManager {
-
   final AppFireBaseHelper fireBaseHelper;
 
   AppRoutingManager({required this.fireBaseHelper});
@@ -37,7 +38,7 @@ class AppRoutingManager {
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutingConstants.splash:
-        if(fireBaseHelper.firebaseAuth.currentUser != null){
+        if (fireBaseHelper.firebaseAuth.currentUser != null) {
           return MaterialPageRoute(builder: (_) => const Land());
         }
         return MaterialPageRoute(builder: (_) => const SplashView());
@@ -60,9 +61,10 @@ class AppRoutingManager {
       case AppRoutingConstants.viewAll:
         var args = settings.arguments as ViewAllModel;
         return MaterialPageRoute(
-            builder: (_) => ViewAllView(
-                  viewAllModel: args,
-                ));
+          builder: (_) => ViewAllView(
+            viewAllModel: args,
+          ),
+        );
       case AppRoutingConstants.productDetails:
         var args = settings.arguments as HomeProductEntity;
         return MaterialPageRoute(
@@ -77,8 +79,8 @@ class AppRoutingManager {
               BlocProvider(create: (context) => getIt<AddToCartCubit>()),
               BlocProvider(create: (context) => getIt<RemoveFromCartCubit>()),
               BlocProvider(create: (context) => getIt<AddToFavoriteCubit>()),
-              BlocProvider(create: (context) => getIt<RemoveFromFavoriteCubit>()),
-
+              BlocProvider(
+                  create: (context) => getIt<RemoveFromFavoriteCubit>()),
             ],
             child: ProductDetailsView(
               product: args,
@@ -88,23 +90,29 @@ class AppRoutingManager {
 
       case AppRoutingConstants.paymentMethods:
         var args = settings.arguments as InvoiceEntity;
-        return MaterialPageRoute(builder: (context) {
-          return MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (context) => getIt<OrderCubit>()),
-            ],
-            child: PaymentMethodsView(
-              invoice: args,
-            ),
-          );
-        });
+        return MaterialPageRoute(
+          builder: (context) {
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => getIt<OrderCubit>()),
+              ],
+              child: PaymentMethodsView(
+                invoice: args,
+              ),
+            );
+          },
+        );
 
       case AppRoutingConstants.masterCardView:
         var url = settings.arguments as String;
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                create: (context) => getIt<DeleteAllProductsFromCartCubit>(),
-                child: MasterCardView(url: url)));
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<DeleteAllProductsFromCartCubit>(),
+            child: MasterCardView(
+              url: url,
+            ),
+          ),
+        );
       case AppRoutingConstants.map:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
@@ -115,6 +123,15 @@ class AppRoutingManager {
             child: const MapView(),
           ),
         );
+
+      case AppRoutingConstants.searchView:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => getIt<SearchCubit>(),
+            child: const SearchView(),
+          ),
+        );
+
       default:
         return null;
     }

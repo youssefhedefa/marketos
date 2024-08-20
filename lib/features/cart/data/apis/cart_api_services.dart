@@ -8,7 +8,7 @@ part 'cart_api_services.g.dart';
 
 @RestApi(baseUrl: ApiConstants.baseUrl)
 abstract class CartOrFavoriteApiService {
-  factory CartOrFavoriteApiService(Dio dio) = _CartApiService;
+  factory CartOrFavoriteApiService(Dio dio) = _CartOrFavoriteApiService;
 
   @GET(CartApiConstants.getSingleProduct)
   Future<ProductData> getSingleProduct({@Path('id') required int id});

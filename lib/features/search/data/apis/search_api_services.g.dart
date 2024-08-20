@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cart_api_services.dart';
+part of 'search_api_services.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'cart_api_services.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _CartOrFavoriteApiService implements CartOrFavoriteApiService {
-  _CartOrFavoriteApiService(
+class _SearchApiServices implements SearchApiServices {
+  _SearchApiServices(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,20 +21,20 @@ class _CartOrFavoriteApiService implements CartOrFavoriteApiService {
   String? baseUrl;
 
   @override
-  Future<ProductData> getSingleProduct({required int id}) async {
+  Future<ProductModel> search({required String query}) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'q': query};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ProductData>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<ProductModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'products/${id}',
+              'products/search',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -43,7 +43,7 @@ class _CartOrFavoriteApiService implements CartOrFavoriteApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = ProductData.fromJson(_result.data!);
+    final _value = ProductModel.fromJson(_result.data!);
     return _value;
   }
 

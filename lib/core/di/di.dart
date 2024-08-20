@@ -44,6 +44,11 @@ import 'package:marketos/features/registration/domain/use_cases/log_in_use_case.
 import 'package:marketos/features/registration/domain/use_cases/sign_in_use_case.dart';
 import 'package:marketos/features/registration/logic/cubits/log_in_cubit/log_in_cubit.dart';
 import 'package:marketos/features/registration/logic/cubits/sign_in_cubit/sign_in_cubit.dart';
+import 'package:marketos/features/search/data/apis/search_api_services.dart';
+import 'package:marketos/features/search/data/repo_imple/earch_repo_imple.dart';
+import 'package:marketos/features/search/domain/repo/search_repo.dart';
+import 'package:marketos/features/search/domain/use_cases/search_use_case.dart';
+import 'package:marketos/features/search/logic/search_cubit/search_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -158,4 +163,20 @@ void setupDependencyInjection() async {
 
   getIt.registerFactory<RemoveFromFavoriteCubit>(
       () => RemoveFromFavoriteCubit(useCase: getIt<RemoveFromFavoriteUseCase>()));
+
+
+  // Search
+
+  getIt.registerLazySingleton<SearchApiServices>(() => SearchApiServices(dio));
+
+  getIt.registerLazySingleton<SearchRepo>(() => SearchRepoImple(
+      searchApiServices: getIt<SearchApiServices>()));
+
+  getIt.registerLazySingleton<SearchUseCase>(
+      () => SearchUseCase(searchRepo: getIt<SearchRepo>()));
+
+  getIt.registerFactory<SearchCubit>(
+      () => SearchCubit(
+          useCase: getIt<SearchUseCase>()));
+
 }

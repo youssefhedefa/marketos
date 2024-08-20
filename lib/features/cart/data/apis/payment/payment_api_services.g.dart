@@ -88,7 +88,7 @@ class _PaymentApiService implements PaymentApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = PaymentResponseModel.fromJson(_result.data!,);
+    final _value = PaymentResponseModel.fromJson(_result.data!);
     return _value;
   }
 

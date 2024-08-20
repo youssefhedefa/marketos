@@ -116,7 +116,6 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
         create: (context) => getIt<GetFavoriteCubit>(),
           child: const FavoriteView(),
       ),
-      const Scaffold(),
     ];
     return Scaffold(
       resizeToAvoidBottomInset: false,

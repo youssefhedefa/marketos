@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:marketos/core/helpers/image_assets_helper.dart';
+import 'package:marketos/core/networking/firebase/firebase_helper.dart';
+import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/features/land/ui/widgets/custom_drawer_item.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -53,17 +55,13 @@ class CustomDrawer extends StatelessWidget {
                 changeView(3);
               },
             ),
-            CustomDrawerItem(
-              title: 'Settings',
-              icon: Icons.settings_outlined,
-              onTap: () {
-                changeView(4);
-              },
-            ),
             const Spacer(),
-            const CustomDrawerItem(
+            CustomDrawerItem(
               title: 'Sign Out',
               icon: Icons.logout,
+              onTap: (){
+                AppFireBaseHelper().signOut().then((value) => Navigator.pushNamedAndRemoveUntil(context, AppRoutingConstants.splash, (route) => false));
+              },
             ),
             const SizedBox(
               height: 60,

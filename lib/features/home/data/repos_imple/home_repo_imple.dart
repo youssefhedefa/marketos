@@ -13,8 +13,8 @@ class HomeRepoImple implements HomeRepo {
   @override
   final AppFireBaseHelper appFireBaseHelper;
 
-
-  HomeRepoImple({required this.homeApiService,required this.appFireBaseHelper});
+  HomeRepoImple(
+      {required this.homeApiService, required this.appFireBaseHelper});
 
   @override
   Future<Either<Failure, List<CategoryEntity>>> getHomeCategories() async {
@@ -27,9 +27,11 @@ class HomeRepoImple implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<HomeProductEntity>>> getProductsByCategory({required String category}) async {
+  Future<Either<Failure, List<HomeProductEntity>>> getProductsByCategory(
+      {required String category}) async {
     try {
-      var products = await homeApiService.getProductsByCategory(category: category);
+      var products =
+          await homeApiService.getProductsByCategory(category: category);
       return Right(products.products);
     } catch (error) {
       return Left(Failure(message: error.toString()));
@@ -37,59 +39,95 @@ class HomeRepoImple implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, dynamic>> addToCart({required ProductInCartDetails product}) async {
-    try{
-      final result = await appFireBaseHelper.addProductToCart(productInCartDetails: product);
+  Future<Either<Failure, dynamic>> addToCart(
+      {required ProductInCartDetails product}) async {
+    try {
+      final result = await appFireBaseHelper.addProductToCart(
+          productInCartDetails: product);
       return Right(result);
-    }
-    catch(e){
+    } catch (e) {
       return Left(Failure(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, bool>> checkIfProductIsInCart({required int productID}) async {
-    try{
+  Future<Either<Failure, bool>> checkIfProductIsInCart(
+      {required int productID}) async {
+    try {
       final result = await appFireBaseHelper.getUserCart();
-      print(result);
-      if(result != null){
-        if(result.cartProducts.any((element) => element.id == productID)){
+      // print(result);
+      if (result != null) {
+        if (result.cartProducts.any((element) => element.id == productID)) {
           return const Right(true);
+        } else {
+          return const Right(false);
         }
-        else{
+      } else {
+        return const Right(false);
+      }
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, dynamic>> removeFromCart(
+      {required int productID}) async {
+    try {
+      final result =
+          await appFireBaseHelper.removeProductFromCart(id: productID);
+      return Right(result);
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, dynamic>> addToFavorite(
+      {required ProductInCartDetails product}) async {
+    try {
+      final result = await appFireBaseHelper.addToFavorite(
+          userId: appFireBaseHelper.firebaseAuth.currentUser!.uid,
+          productId: product.id);
+      return Right(result);
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> checkIfProductIsInFavorite(
+      {required int productID}) async {
+    try {
+      final result = await appFireBaseHelper.getFavorites(
+          userId: appFireBaseHelper.firebaseAuth.currentUser!.uid);
+
+      print('checkIfProductIsInFavorite $result');
+
+      if (result.isEmpty) {
+        return const Right(false);
+      } else {
+        if (result.any((element) => element == productID)) {
+          return const Right(true);
+        } else {
           return const Right(false);
         }
       }
-      else{
-        return const Right(false);
-      }
-    }
-    catch(e){
+    } catch (e) {
       return Left(Failure(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, dynamic>> removeFromCart({required int productID}) async {
-    try{
-      final result = await appFireBaseHelper.removeProductFromCart(id: productID);
+  Future<Either<Failure, dynamic>> removeFromFavorite(
+      {required int productID}) async {
+    try {
+      final result = await appFireBaseHelper.removeFromFavorite(
+          userId: appFireBaseHelper.firebaseAuth.currentUser!.uid,
+          productId: productID);
       return Right(result);
-    }
-    catch(e){
+    } catch (e) {
       return Left(Failure(message: e.toString()));
     }
   }
-
-
-  @override
-  Future<Either<Failure, dynamic>> addToFavorite({required ProductInCartDetails product}) async {
-    try{
-      final result = await appFireBaseHelper.addToFavorite(userId: appFireBaseHelper.firebaseAuth.currentUser!.uid, productId: product.id);
-      return Right(result);
-    }
-    catch(e){
-      return Left(Failure(message: e.toString()));
-    }
-  }
-
 }

@@ -22,6 +22,9 @@ abstract class HomeRepo{
   Future<Either<Failure,dynamic>> removeFromCart({required int productID});
 
   Future<Either<Failure,dynamic>> addToFavorite({required ProductInCartDetails product});
+  Future<Either<Failure,bool>> checkIfProductIsInFavorite({required int productID});
+  Future<Either<Failure,dynamic>> removeFromFavorite({required int productID});
+
 
 
 }

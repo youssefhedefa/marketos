@@ -21,12 +21,15 @@ import 'package:marketos/features/home/domain/use_cases/add_to_cart_use_case.dar
 import 'package:marketos/features/home/domain/use_cases/add_to_favorite_use_case.dart';
 import 'package:marketos/features/home/domain/use_cases/get_products_by_category_use_case.dart';
 import 'package:marketos/features/home/domain/use_cases/remove_from_cart_use_case.dart';
+import 'package:marketos/features/home/domain/use_cases/remove_from_favorite_use_case.dart';
 import 'package:marketos/features/home/logic/cubits/add_to_cart_cubit/add_to_cart_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/add_to_favorite_cubit/add_to_favorite_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/check_favorite_state_cubit/check_favorite_state_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/check_product_cubit/check_product_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categories_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/remove_from_cart_cubit/remove_from_cart_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/remove_from_favorite_cubit/remove_from_favorite_cubit.dart';
 import 'package:marketos/features/profile/data/repo_imple/profile_repo_imple.dart';
 import 'package:marketos/features/profile/domain/repo/profile_repo.dart';
 import 'package:marketos/features/profile/domain/use_cases/change_address_use_case.dart';
@@ -147,4 +150,12 @@ void setupDependencyInjection() async {
   getIt.registerFactory<AddToFavoriteCubit>(
       () => AddToFavoriteCubit(useCase: getIt<AddToFavoriteUseCase>()));
 
+  getIt.registerFactory<CheckFavoriteStateCubit>(
+      () => CheckFavoriteStateCubit(homeRepo: getIt<HomeRepo>()));
+
+  getIt.registerLazySingleton<RemoveFromFavoriteUseCase>(
+      () => RemoveFromFavoriteUseCase(homeRepo: getIt<HomeRepo>()));
+
+  getIt.registerFactory<RemoveFromFavoriteCubit>(
+      () => RemoveFromFavoriteCubit(useCase: getIt<RemoveFromFavoriteUseCase>()));
 }

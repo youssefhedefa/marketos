@@ -11,8 +11,10 @@ import 'package:marketos/features/home/data/models/view_all_model.dart';
 import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
 import 'package:marketos/features/home/logic/cubits/add_to_cart_cubit/add_to_cart_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/add_to_favorite_cubit/add_to_favorite_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/check_favorite_state_cubit/check_favorite_state_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/check_product_cubit/check_product_cubit.dart';
 import 'package:marketos/features/home/logic/cubits/remove_from_cart_cubit/remove_from_cart_cubit.dart';
+import 'package:marketos/features/home/logic/cubits/remove_from_favorite_cubit/remove_from_favorite_cubit.dart';
 import 'package:marketos/features/home/ui/product_details_view.dart';
 import 'package:marketos/features/home/ui/widgets/view_all/view_all_view.dart';
 import 'package:marketos/features/land/ui/land.dart';
@@ -58,14 +60,16 @@ class AppRoutingManager {
           builder: (_) => MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => getIt<CheckProductCubit>()
-                  ..checkProduct(
-                    productId: args.productID,
-                  ),
-              ),
+                  create: (context) => getIt<CheckProductCubit>()
+                    ..checkProduct(productId: args.productID)),
+              BlocProvider(
+                  create: (context) => getIt<CheckFavoriteStateCubit>()
+                    ..checkFavorite(productID: args.productID)),
               BlocProvider(create: (context) => getIt<AddToCartCubit>()),
               BlocProvider(create: (context) => getIt<RemoveFromCartCubit>()),
               BlocProvider(create: (context) => getIt<AddToFavoriteCubit>()),
+              BlocProvider(create: (context) => getIt<RemoveFromFavoriteCubit>()),
+
             ],
             child: ProductDetailsView(
               product: args,
@@ -88,9 +92,10 @@ class AppRoutingManager {
 
       case AppRoutingConstants.masterCardView:
         var url = settings.arguments as String;
-        return MaterialPageRoute(builder: (_) => BlocProvider(
-            create: (context) => getIt<DeleteAllProductsFromCartCubit>(),
-            child: MasterCardView(url: url)));
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (context) => getIt<DeleteAllProductsFromCartCubit>(),
+                child: MasterCardView(url: url)));
       case AppRoutingConstants.map:
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(

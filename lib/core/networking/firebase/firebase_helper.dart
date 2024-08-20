@@ -238,17 +238,17 @@ class AppFireBaseHelper {
     return "User not found";
   }
 
-  // Future<void> removeFromFavorite(
-  //     {required String userId, required String animeId}) async {
-  //   var userCollection = getUserCollection();
-  //   var docReference = userCollection.doc(userId);
-  //   var user = await getUser(userId);
-  //   if (user != null) {
-  //     var favorites = user.favourites;
-  //     favorites.remove(animeId);
-  //     await docReference.update({_userFavoritesField: favorites});
-  //   }
-  // }
+  Future<dynamic> removeFromFavorite(
+      {required String userId, required int productId}) async {
+    var userCollection = getUserCollection();
+    var docReference = userCollection.doc(userId);
+    var user = await getUser(userId);
+    if (user != null) {
+      var favorites = user.favourites;
+      favorites.remove(productId);
+      await docReference.update({_userFavoritesField: favorites});
+    }
+  }
 
   // Future<String> addToCart(
   //     {required String userId, required String productId}) async {

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketos/core/components/bloc_observer.dart';
 import 'package:marketos/core/di/di.dart';
+import 'package:marketos/core/networking/firebase/firebase_helper.dart';
 import 'package:marketos/core/networking/firebase/firebase_messaging_helper.dart';
 import 'package:marketos/core/routing/routing_manager.dart';
 import 'package:marketos/firebase_options.dart';
@@ -22,7 +23,9 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   runApp(
     Marketos(
-      appRoutingManager: AppRoutingManager(),
+      appRoutingManager: AppRoutingManager(
+        fireBaseHelper: AppFireBaseHelper(),
+      ),
     ),
   );
 }

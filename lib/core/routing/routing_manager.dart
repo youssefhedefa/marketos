@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketos/core/di/di.dart';
+import 'package:marketos/core/networking/firebase/firebase_helper.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/features/cart/domain/entities/invoice_entity.dart';
 import 'package:marketos/features/cart/logic/cubits/delete_all_products_from_cart/delete_all_products_from_cart_cubit.dart';
@@ -28,9 +29,17 @@ import 'package:marketos/features/registration/ui/forms/sign_in_form.dart';
 import 'package:marketos/features/splash/ui/splash_view.dart';
 
 class AppRoutingManager {
+
+  final AppFireBaseHelper fireBaseHelper;
+
+  AppRoutingManager({required this.fireBaseHelper});
+
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutingConstants.splash:
+        if(fireBaseHelper.firebaseAuth.currentUser != null){
+          return MaterialPageRoute(builder: (_) => const Land());
+        }
         return MaterialPageRoute(builder: (_) => const SplashView());
       case AppRoutingConstants.signIn:
         return MaterialPageRoute(

@@ -32,110 +32,17 @@ class ProductDetailsView extends StatelessWidget {
           BlocBuilder<CheckFavoriteStateCubit,CheckFavoriteState>(
             builder: (context,state) {
               if (state is CheckFavoriteLoading) {
-                return const SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: FittedBox(child: CircularProgressIndicator()),
+                return const Padding(
+                  padding: EdgeInsets.all(24.0),
+                  child: CircularProgressIndicator(),
                 );
               }
               if (state is CheckFavoriteSuccess) {
                 if(state.isFavorite){
-                  return BlocConsumer<RemoveFromFavoriteCubit,RemoveFromFavoriteState>(
-                    builder: (context,state) {
-                      return IconButton(
-                        onPressed: () {
-                          context.read<RemoveFromFavoriteCubit>().removeFromFavorite(
-                            productID: product.productID,
-                          );
-                        },
-                        icon: const SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Icon(Icons.favorite),
-                        ),
-                      );
-                    },
-                    listener: (context,state) {
-                      if (state is RemoveFromFavoriteSuccessState) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Product removed from favorite'),
-                          ),
-                        );
-                        context.read<CheckFavoriteStateCubit>().checkFavorite(productID: product.productID);
-                        Navigator.pop(context);
-                      }
-                      if (state is RemoveFromFavoriteErrorState) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Failed to add product to favorite'),
-                          ),
-                        );
-                        Navigator.pop(context);
-                      }
-                      if(state is RemoveFromFavoriteLoadingState){
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        );
-                      }
-                    },
-                  );
+                  return whenTheProductIsFavorite();
                 }
                 else {
-                  return BlocConsumer<AddToFavoriteCubit,AddToFavoriteState>(
-                    builder: (context,state) {
-                      return IconButton(
-                        onPressed: () {
-                          context.read<AddToFavoriteCubit>().addToFavorite(
-                            product: ProductInCartDetails(
-                              id: product.productID,
-                              quantity: 1,
-                              price: product.productPrice,
-                            ),
-                          );
-                        },
-                        icon: const SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Icon(Icons.favorite_border),
-                        ),
-                      );
-                    },
-                    listener: (context,state){
-                      if (state is AddToFavoriteSuccess) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Product added to favorite'),
-                          ),
-                        );
-                        context.read<CheckFavoriteStateCubit>().checkFavorite(productID: product.productID);
-                        Navigator.pop(context);
-                      }
-                      if (state is AddToFavoriteFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Failed to add product to favorite'),
-                          ),
-                        );
-                        Navigator.pop(context);
-                      }
-                      if(state is AddToFavoriteLoading){
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        );
-                      }
-                    },
-                  );
+                  return whenTheProductIsNotFavorite();
                 }
               }
               return const SizedBox();
@@ -161,4 +68,105 @@ class ProductDetailsView extends StatelessWidget {
       ),
     );
   }
+
+  Widget whenTheProductIsFavorite(){
+    return BlocConsumer<RemoveFromFavoriteCubit,RemoveFromFavoriteState>(
+      builder: (context,state) {
+        return IconButton(
+          onPressed: () {
+            context.read<RemoveFromFavoriteCubit>().removeFromFavorite(
+              productID: product.productID,
+            );
+          },
+          icon: const SizedBox(
+            width: 40,
+            height: 40,
+            child: Icon(Icons.favorite),
+          ),
+        );
+      },
+      listener: (context,state) {
+        if (state is RemoveFromFavoriteSuccessState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Product removed from favorite'),
+            ),
+          );
+          context.read<CheckFavoriteStateCubit>().checkFavorite(productID: product.productID);
+          Navigator.pop(context);
+        }
+        if (state is RemoveFromFavoriteErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Failed to add product to favorite'),
+            ),
+          );
+          Navigator.pop(context);
+        }
+        if(state is RemoveFromFavoriteLoadingState){
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          );
+        }
+      },
+    );
+  }
+
+  Widget whenTheProductIsNotFavorite(){
+    return BlocConsumer<AddToFavoriteCubit,AddToFavoriteState>(
+      builder: (context,state) {
+        return IconButton(
+          onPressed: () {
+            context.read<AddToFavoriteCubit>().addToFavorite(
+              product: ProductInCartDetails(
+                id: product.productID,
+                quantity: 1,
+                price: product.productPrice,
+              ),
+            );
+          },
+          icon: const SizedBox(
+            width: 40,
+            height: 40,
+            child: Icon(Icons.favorite_border),
+          ),
+        );
+      },
+      listener: (context,state){
+        if (state is AddToFavoriteSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Product added to favorite'),
+            ),
+          );
+          context.read<CheckFavoriteStateCubit>().checkFavorite(productID: product.productID);
+          Navigator.pop(context);
+        }
+        if (state is AddToFavoriteFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Failed to add product to favorite'),
+            ),
+          );
+          Navigator.pop(context);
+        }
+        if(state is AddToFavoriteLoading){
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          );
+        }
+      },
+    );
+  }
+
 }

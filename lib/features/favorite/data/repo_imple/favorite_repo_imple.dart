@@ -4,6 +4,8 @@ import 'package:marketos/core/networking/firebase/firebase_helper.dart';
 import 'package:marketos/features/cart/data/apis/cart_api_services.dart';
 import 'package:marketos/features/cart/domain/entities/cart_product_entity.dart';
 import 'package:marketos/features/favorite/domain/repo/favorite_repo.dart';
+import 'package:marketos/features/home/data/mapper/to_product_entity.dart';
+import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
 
 class FavoriteRepoImple implements FavoriteRepo{
 
@@ -38,15 +40,16 @@ class FavoriteRepoImple implements FavoriteRepo{
       final result = await apiService.getSingleProduct(
         id: productID,
       );
-      CartOrFavoriteProductEntity product = CartOrFavoriteProductEntity(
-          id: result.id,
-          name: result.name,
-          price: result.productPrice,
-          image: result.image,
-          images: result.images,
-          description: result.description
+      HomeProductEntity product = ToProductEntityMapper.call(data: result);
+      CartOrFavoriteProductEntity productEntity = CartOrFavoriteProductEntity(
+          id: product.productID,
+          name: product.name,
+          price: product.productPrice,
+          image: product.image,
+          images: product.otherImages,
+          description: result.description,
       );
-      return Right(product);
+      return Right(productEntity);
     }
     catch(e){
       return Left(Failure(message: e.toString()));

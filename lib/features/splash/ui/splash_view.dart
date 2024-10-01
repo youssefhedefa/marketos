@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:marketos/core/components/custom_button.dart';
 import 'package:marketos/core/helpers/color_helper.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
+import 'package:marketos/core/helpers/image_assets_helper.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
 
 class SplashView extends StatelessWidget {
@@ -18,7 +19,7 @@ class SplashView extends StatelessWidget {
             height: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/splash.png'),
+                image: AssetImage(AppImageHelper.splashImage),
                 fit: BoxFit.cover,
               ),
             ),

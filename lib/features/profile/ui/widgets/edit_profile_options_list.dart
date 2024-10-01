@@ -6,6 +6,7 @@ import 'package:marketos/core/di/di.dart';
 import 'package:marketos/core/helpers/font_style_helper.dart';
 import 'package:marketos/core/routing/routing_constants.dart';
 import 'package:marketos/features/profile/logic/cubits/change_address_cubit/change_Address_cubit.dart';
+import 'package:marketos/features/profile/logic/cubits/change_address_cubit/change_address_states.dart';
 import 'package:marketos/features/profile/logic/cubits/change_image_cubit/change_image_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/change_image_cubit/change_image_states.dart';
 import 'package:marketos/features/profile/logic/cubits/change_name_cubit/change_name_cubit.dart';
@@ -23,7 +24,6 @@ class EditProfileOptionsList extends StatefulWidget {
 }
 
 class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
-
   late TextEditingController nameController;
 
   @override
@@ -39,16 +39,15 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
       shrinkWrap: true,
       children: [
         BlocBuilder<ChangeNameCubit, ChangeNameState>(
-          builder: (context,state) {
-            return EditProfileOption(
-              title: 'Change Name',
-              isDrawerOpened: widget.isDrawerOpened,
-              onTap: () {
-                nameBottomSheet();
-              },
-            );
-          }
-        ),
+            builder: (context, state) {
+          return EditProfileOption(
+            title: 'Change Name',
+            isDrawerOpened: widget.isDrawerOpened,
+            onTap: () {
+              nameBottomSheet();
+            },
+          );
+        }),
         SizedBox(height: 20.h),
         BlocBuilder<ChangeImageCubit, ChangeImageState>(
           builder: (context, state) {
@@ -62,13 +61,13 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
           },
         ),
         SizedBox(height: 20.h),
-        BlocProvider(
-          create: (context)=> getIt<ChangeAddressCubit>(),
-          child: EditProfileOption(
+        BlocBuilder<ChangeAddressCubit, ChangeAddressState>(
+          builder: (context, state) => EditProfileOption(
             isDrawerOpened: widget.isDrawerOpened,
             title: 'Change Address',
             onTap: () {
-              Navigator.pushNamed(context, AppRoutingConstants.map).then((value) => context.read<GetProfileCubit>().getProfile());
+              Navigator.pushNamed(context, AppRoutingConstants.map).then(
+                  (value) => context.read<GetProfileCubit>().getProfile());
             },
           ),
         ),
@@ -84,10 +83,10 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
         return MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context)=> getIt<ChangeNameCubit>(),
+              create: (context) => getIt<ChangeNameCubit>(),
             ),
             BlocProvider(
-              create: (context)=> getIt<GetProfileCubit>(),
+              create: (context) => getIt<GetProfileCubit>(),
             )
           ],
           child: Padding(
@@ -118,9 +117,27 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
                     return CustomButton(
                       text: 'Change Name',
                       onTap: () {
-                        context.read<ChangeNameCubit>().changeName(
-                            name: nameController.text,
-                        );
+                        if (nameController.text.isNotEmpty) {
+                          context
+                              .read<ChangeNameCubit>()
+                              .changeName(name: nameController.text);
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Error'),
+                              content: const Text('Name cannot be empty'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('OK'),
+                                )
+                              ],
+                            ),
+                          );
+                        }
                       },
                       color: Theme.of(context).primaryColor,
                       textStyle: AppTextStyleHelper.font26WhiteBold,
@@ -132,7 +149,7 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
                           content: Text('Name changed successfully')));
                       nameController.clear();
                       Navigator.pop(context);
-                      Navigator.pop(context,true);
+                      Navigator.pop(context, true);
                     }
                     if (state is ChangeNameFailed) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -164,8 +181,10 @@ class _EditProfileOptionsListState extends State<EditProfileOptionsList> {
   changeImage() {
     context.read<ChangeImageCubit>().pickImage().then((value) {
       if (value != null) {
-        context.read<ChangeImageCubit>().changeImage(image: value).then((value) => context.read<GetProfileCubit>().getProfile());
-
+        context
+            .read<ChangeImageCubit>()
+            .changeImage(image: value)
+            .then((value) => context.read<GetProfileCubit>().getProfile());
       }
     }).catchError((e) {
       ScaffoldMessenger.of(context).showSnackBar(

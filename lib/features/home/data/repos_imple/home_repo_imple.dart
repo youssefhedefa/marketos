@@ -3,6 +3,8 @@ import 'package:marketos/core/failure/failure.dart';
 import 'package:marketos/core/networking/firebase/firebase_helper.dart';
 import 'package:marketos/core/networking/firebase/models/cart_product_details_model.dart';
 import 'package:marketos/features/home/data/apis/home_api_service.dart';
+import 'package:marketos/features/home/data/mapper/to_category_entity.dart';
+import 'package:marketos/features/home/data/mapper/to_product_entity.dart';
 import 'package:marketos/features/home/domain/entities/category_entity.dart';
 import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
 import 'package:marketos/features/home/domain/repos/home_repo.dart';
@@ -19,7 +21,8 @@ class HomeRepoImple implements HomeRepo {
   @override
   Future<Either<Failure, List<CategoryEntity>>> getHomeCategories() async {
     try {
-      var categories = await homeApiService.getCategories();
+      var response = await homeApiService.getCategories();
+      List<CategoryEntity> categories = ToCategoryEntityMapper.listCall(models: response);
       return Right(categories);
     } catch (error) {
       return Left(Failure(message: error.toString()));
@@ -30,9 +33,10 @@ class HomeRepoImple implements HomeRepo {
   Future<Either<Failure, List<HomeProductEntity>>> getProductsByCategory(
       {required String category}) async {
     try {
-      var products =
+      var response =
           await homeApiService.getProductsByCategory(category: category);
-      return Right(products.products);
+      List<HomeProductEntity> products = ToProductEntityMapper.listCall(data: response.products);
+      return Right(products);
     } catch (error) {
       return Left(Failure(message: error.toString()));
     }
@@ -101,8 +105,6 @@ class HomeRepoImple implements HomeRepo {
     try {
       final result = await appFireBaseHelper.getFavorites(
           userId: appFireBaseHelper.firebaseAuth.currentUser!.uid);
-
-      print('checkIfProductIsInFavorite $result');
 
       if (result.isEmpty) {
         return const Right(false);

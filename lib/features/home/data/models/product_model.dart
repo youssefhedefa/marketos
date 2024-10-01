@@ -1,5 +1,3 @@
-import 'package:marketos/features/home/domain/entities/home_product_entity.dart';
-
 class ProductModel {
   final List<ProductData> products;
 
@@ -15,7 +13,7 @@ class ProductModel {
   }
 }
 
-class ProductData extends HomeProductEntity {
+class ProductData {
   final int id;
   final String title;
   final String description;
@@ -24,23 +22,15 @@ class ProductData extends HomeProductEntity {
   final String thumbnail;
   final String category;
 
-  ProductData(
-      {required this.id,
-      required this.title,
-      required this.description,
-      required this.price,
-      required this.images,
-      required this.thumbnail,
-      required this.category})
-      : super(
-          productID: id,
-          name: title,
-          productPrice: price,
-          image: thumbnail,
-          productCategory: category,
-          otherImages: images,
-          productDescription: description,
-        );
+  ProductData({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.images,
+    required this.thumbnail,
+    required this.category,
+  });
 
   factory ProductData.fromJson(Map<String, dynamic> json) {
     return ProductData(

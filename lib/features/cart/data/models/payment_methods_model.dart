@@ -1,5 +1,3 @@
-import 'package:marketos/features/cart/domain/entities/payment_method_entity.dart';
-
 class PaymentMethodsModel {
   PaymentMethodsModel({
     required this.status,
@@ -18,14 +16,14 @@ class PaymentMethodsModel {
 
 }
 
-class PaymentMethodDetails extends PaymentMethodEntity {
+class PaymentMethodDetails{
   PaymentMethodDetails({
     required this.paymentId,
     required this.nameEn,
     required this.nameAr,
     required this.redirect,
     required this.logo,
-  }) : super(id: paymentId, name: nameEn ?? 'Not Found', image: logo ?? '');
+  });
 
   final int paymentId;
   final String? nameEn;

@@ -13,6 +13,7 @@ import 'package:marketos/features/home/logic/cubits/get_category_cubit/get_categ
 import 'package:marketos/features/home/logic/cubits/get_products_by_category/get_products_by_category_cubit.dart';
 import 'package:marketos/features/home/ui/home_view.dart';
 import 'package:marketos/features/land/ui/widgets/custom_drawer.dart';
+import 'package:marketos/features/profile/logic/cubits/change_address_cubit/change_Address_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/change_image_cubit/change_image_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/change_name_cubit/change_name_cubit.dart';
 import 'package:marketos/features/profile/logic/cubits/get_profile_cubit/get_profile_cubit.dart';
@@ -95,6 +96,9 @@ class _LandState extends State<Land> with SingleTickerProviderStateMixin {
           ),
           BlocProvider(
             create: (context) => getIt<ChangeImageCubit>(),
+          ),
+          BlocProvider(
+            create: (context) => getIt<ChangeAddressCubit>(),
           ),
         ],
         child: ProfileView(
